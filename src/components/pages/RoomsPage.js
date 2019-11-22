@@ -9,8 +9,7 @@ export const RoomsPage = (props) => {
     }, []);
 
     return (
-        <div className="container my-5">
-            <div className="row d-flex justify-content-around">
+            <div className="row d-flex justify-content-around m-5">
                 <div className="col">
                     <RoomTablet roomName="Alpha"/>
                 </div>
@@ -22,6 +21,5 @@ export const RoomsPage = (props) => {
                     <RoomTablet roomName="Charlie"/>
                 </div>
             </div>
-        </div>
     );
 };

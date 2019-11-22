@@ -10,7 +10,7 @@ export const RoomTablet = (props) => {
     }, []);
 
     return (
-        <div className="bg-dark border-danger room">
+        <div className="bg-dark border-danger p-5 room">
             <CalendarCustom roomName={props.roomName}/>
         </div>
     );
