@@ -1,0 +1,22 @@
+.react-clock__face {
+    border: 0;
+
+}
+
+
+.react-clock__hour-mark__body {
+    height: 12px;
+    width: 12px !important;
+    border-radius: 50%;
+    background: red;
+}
+
+.react-clock__hand__body {
+    border-radius: 40%;
+    background-color: lightgrey;
+
+}
+
+.react-clock__minute-hand__body {
+    opacity: 60%;
+}
