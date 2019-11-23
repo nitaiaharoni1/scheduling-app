@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { RoomTablet } from "../RoomTablet"
+import React, {useState, useEffect} from 'react';
+import {RoomTablet} from "../RoomTablet"
 
-export const RoomsPage = (props) => {
-    const [state, setState] = useState(null);
-
-    useEffect(() => {
-        // Update useEffect
-    }, []);
+export const RoomsPage = () => {
+    const rooms = ["Alpha", "Bravo", "Charlie"];
 
     return (
-            <div className="row d-flex justify-content-around m-5">
+        <div className="row d-flex justify-content-around m-5">
+            {rooms.map(room =>
                 <div className="col">
-                    <RoomTablet roomName="Alpha"/>
+                    <RoomTablet roomName={room}/>
                 </div>
-                <div className="col">
-                    <RoomTablet roomName="Beta"/>
-
-                </div>
-                <div className="col">
-                    <RoomTablet roomName="Charlie"/>
-                </div>
-            </div>
+            )}
+        </div>
     );
 };

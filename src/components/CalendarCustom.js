@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Calendar, momentLocalizer} from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+
 import moment from 'moment';
 import uuid from 'uuid';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
@@ -25,7 +26,10 @@ export const CalendarCustom = (props) => {
         const title = window.prompt('Edit event\'s name:');
         if(title){
             const updatedEvents = [...events].map(existingEvent => {
-                return existingEvent.id === event.id ? {...existingEvent, title} : existingEvent
+                return existingEvent.id === event.id ? {
+                    ...existingEvent,
+                    title: "<b>" + title + "</b>" + '\ndescription'
+                } : existingEvent
             });
             setEvents(updatedEvents)
         }
@@ -39,7 +43,7 @@ export const CalendarCustom = (props) => {
         }
     };
 
-    const handleChange = ({event, start, end,id}) => {
+    const handleChange = ({event, start, end, id}) => {
         console.log(events);
         const updatedEvents = [...events].map(existingEvent => {
             return existingEvent.id === event.id ? {...existingEvent, start, end} : existingEvent
