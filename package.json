@@ -1,37 +1,20 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "main",
+  "version": "0.0.1",
   "private": true,
-  "dependencies": {
-    "moment": "^2.24.0",
-    "react": "^16.12.0",
-    "react-big-calendar": "^0.23.0",
-    "react-bootstrap-dialog": "^0.13.0",
-    "react-clock": "^2.4.0",
-    "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
-    "uuid": "^3.3.3"
-  },
+  "main": "app.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "node ./server/app.js",
+    "dev": "SET DEV=true && node ./server/app.js",
+    "test": "node_modules/.bin/mocha --recursive test",
+    "test:coverage": "node_modules/.bin/nyc npm test",
+    "test:unit": "node_modules/.bin/mocha --recursive test/middleware test/models test/routes",
+    "test:integration": "node_modules/.bin/mocha --recursive test/integration"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "devDependencies": {}
 }

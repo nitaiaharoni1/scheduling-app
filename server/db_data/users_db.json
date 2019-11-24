@@ -1,0 +1,17 @@
+{
+  "admin": {
+    "organization": "dynamic-yield",
+    "email": "admin@admin.com",
+    "password": "1234",
+    "username": "admin",
+    "firstName": "firstName",
+    "lastName": "lastName"
+  },
+  "newUsername": {
+    "password": "1234",
+    "organization": "newOrg",
+    "firstName": "first",
+    "lastName": "last",
+    "email": "user@gmail.com"
+  }
+}

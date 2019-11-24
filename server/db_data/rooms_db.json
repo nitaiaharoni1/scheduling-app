@@ -1,0 +1,26 @@
+{
+  "dynamic-yield": {
+    "Alpha": {
+      "events": [
+        {
+          "id": "123-456",
+          "start": "1",
+          "end": "2",
+          "title": "title1"
+        },
+        {
+          "id": "789-101112",
+          "start": "3",
+          "end": "4",
+          "title": "title2"
+        }
+      ]
+    },
+    "Bravo": {
+      "events": {}
+    },
+    "Charlie": {
+      "events": {}
+    }
+  }
+}

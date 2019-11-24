@@ -1,0 +1,14 @@
+{
+  "dynamic-yield": {
+    "rooms": [
+      "Alpha",
+      "Bravo",
+      "Charlie"
+    ],
+    "icon": "https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_d3016b67c287ab28518b9696afe21d56/dynamic-yield.png",
+    "name": "Dynamic Yield",
+    "users": [
+      "admin"
+    ]
+  }
+}
