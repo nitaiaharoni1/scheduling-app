@@ -11,14 +11,18 @@ function App() {
     const [organizationData, setOrganizationData] = useState({});
     const [userData, setUserData] = useState({});
 
-    useEffect(async () => {
+    useEffect(() => {
+        auth();
+    }, []);
+
+    const auth = async () => {
         const data = await authApi();
         setLoading(false);
         if (data) {
             handleLogin(data);
 
         }
-    }, []);
+    }
 
     const handleLogin = (data) => {
         const {firstName, lastName} = data.userData;

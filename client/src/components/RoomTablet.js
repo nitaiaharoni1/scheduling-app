@@ -4,65 +4,84 @@ import {CalendarCustom} from "./CalendarCustom";
 import "../styles/RoomTablet.css"
 import uuid from "uuid";
 import moment from "moment";
-import {getEventsApi, postEventsApi} from "../apis/rooms_api";
+import {getEventsApi, putEventApi, postEventApi} from "../apis/rooms_api";
 
 export const RoomTablet = (props) => {
     const [isMouseInside, setIsMouseInside] = useState(false);
-    const [events, setEvents] = useState(false);
+    const [events, setEvents] = useState(null);
     const [time, setTime] = useState(moment());
     const [occupied, setOccupied] = useState(false);
     const [nearestTime, setNearestTime] = useState(null);
 
 
-    useEffect(async () => {
+    useEffect(() => {
         setInterval(() => {
             setTime(moment());
         }, 1000 * 60);
-        const fetchedEvents = await getEvents();
-        if (fetchedEvents) {
-            setEvents(fetchedEvents);
-        }
+        getEvents();
     }, []);
 
     useEffect(() => {
-        isOccupied();
-        getNearestTime();
-    }, [events]);
+        if (events) {
+            isOccupied();
+            getNearestTime();
+        }
+    }, [events, time]);
 
     const getEvents = async () => {
-        return await getEventsApi(props.organization, props.room);
-    };
-
-    const postEvents = (updatedEvents) => {
-        postEventsApi(props.organization, props.room, updatedEvents);
-    };
-
-    const isOccupied = () => {
-        if (events) {
-            let isOccupied = events.some(event =>
-                time.isBetween(event.start, event.end)
-            );
-            setOccupied(isOccupied)
+        const newEvents = await getEventsApi(props.organization, props.room);
+        if (newEvents) {
+            setEvents(newEvents);
         }
     };
 
+    const postEvent = async (event) => {
+        const newEvents = await postEventApi(props.organization, props.room, event);
+        if (newEvents) {
+            setEvents(newEvents);
+        }
+    };
+
+    const putEvent = async (event) => {
+        const newEvents = await putEventApi(props.organization, props.room, event);
+        if (newEvents) {
+            setEvents(newEvents);
+        }
+    };
+
+
+    const isOccupied = () => {
+        let isOccupied = events.some(event =>
+            time.isBetween(event.start, event.end)
+        );
+        setOccupied(isOccupied);
+        return isOccupied;
+    };
+
     const getNearestTime = () => {
-        if (events) {
-            let nearestArr = [];
-            for (let event of events) {
-                if (time.isBefore(event.start)) {
-                    nearestArr.push(event.start)
-                }
-                if (time.isBefore(event.end)) {
-                    nearestArr.push(event.end)
+        const occupiedStatus = isOccupied();
+        let nearestArr = [];
+        for (let event of events) {
+            if (time.isBefore(event.start)) {
+                nearestArr.push(event.start)
+            }
+            if (time.isBefore(event.end)) {
+                nearestArr.push(event.end)
+            }
+        }
+        nearestArr.sort((first, second) => {
+            return moment(first).isAfter(moment(second)) ? 1 : -1;
+        });
+        if (occupiedStatus) {
+            while (nearestArr.length > 1) {
+                if (moment(nearestArr[0]).isSame(nearestArr[1])) {
+                    nearestArr.shift();
+                    nearestArr.shift();
                 }
             }
-            nearestArr.sort((first, second) => {
-                return moment(first).isAfter(moment(second)) ? 1 : -1;
-            });
-            if (nearestArr.length > 0) {
-                setNearestTime(nearestArr[0])
-            }
+        }
+        if (nearestArr.length > 0) {
+            setNearestTime(nearestArr[0])
         }
     };
 
@@ -75,35 +94,22 @@ export const RoomTablet = (props) => {
     };
 
     const handleSelectEvent = async (event) => {
-        const fetchedEvents = await getEvents();
         const title = window.prompt('Edit event\'s name:');
         if (title) {
-            const updatedEvents = [...fetchedEvents].map(existingEvent => {
-                return existingEvent.id === event.id ? {...existingEvent, title} : existingEvent
-            });
-            setEvents(updatedEvents);
-            postEvents(updatedEvents);
+            putEvent({...event, title});
         }
     };
 
     const handleSelectSlot = async ({start, end}) => {
-        const fetchedEvents = await getEvents();
         const id = uuid();
         const title = window.prompt('Enter a new event\'s name:');
         if (title) {
-            const updatedEvents = [...fetchedEvents, {id, start, end, title}];
-            setEvents(updatedEvents);
-            postEvents(updatedEvents);
+            postEvent({id, start, end, title});
         }
     };
 
     const handleChange = async ({event, start, end}) => {
-        const fetchedEvents = await getEvents();
-        const updatedEvents = [...fetchedEvents].map(existingEvent => {
-            return existingEvent.id === event.id ? {...existingEvent, start, end} : existingEvent
-        });
-        setEvents(updatedEvents);
-        postEvents(updatedEvents);
+        putEvent({...event, start, end});
     };
 
     let screen;
