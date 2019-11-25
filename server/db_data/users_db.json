@@ -4,8 +4,8 @@
     "email": "admin@admin.com",
     "password": "1234",
     "username": "admin",
-    "firstName": "firstName",
-    "lastName": "lastName"
+    "firstName": "first",
+    "lastName": "last"
   },
   "newUsername": {
     "password": "1234",

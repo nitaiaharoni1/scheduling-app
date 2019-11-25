@@ -2,16 +2,16 @@ const express = require('express');
 const router = express.Router();
 const dao = require("../dao/dao");
 const jwt = require('jsonwebtoken');
+const path = require("path");
 const SECRET = 'secret';
-
-const users_db = "./db_data/users_db.json";
-const organizations_db = "./db_data/organizations_db.json";
+const users_db = path.join(__dirname,"../db_data/users_db.json");
+const organizations_db = path.join(__dirname,"../db_data/organizations_db.json");
 
 router.get('/auth', (req, res) => {
     try {
-        if (req.cookies && req.cookies.roomer_toker) {
+        if (req.cookies && req.cookies.roomer_token) {
             const jsonUsers = dao.readJson(users_db);
-            const token = req.cookies.roomer_toker;
+            const token = req.cookies.roomer_token;
             const decoded = jwt.verify(token, SECRET);
             if (jsonUsers[decoded.username]) {
                 const jsonOrganizations = dao.readJson(organizations_db);
@@ -43,7 +43,7 @@ router.post('/login', (req, res) => {
             if (jsonOrganizations[organization]) {
                 if (checkbox) {
                     const token = jwt.sign({username}, SECRET);
-                    res.cookie('roomer_toker', token);
+                    res.cookie('roomer_token', token);
                 }
                 return res.status(200).json({"msg": "Success", userData: jsonUsers[username], organizationData: jsonOrganizations[organization]});
             } else {
@@ -54,6 +54,15 @@ router.post('/login', (req, res) => {
         }
     } catch (e) {
         return res.status(400).json({"error": e.message});
+    }
+});
+
+router.post('/logout', (req, res) => {
+    try {
+        res.clearCookie('roomer_token');
+        res.status(200).send({"msg": 'Success'});
+    } catch (e) {
+        res.status(400).send({"msg": "Can't logout"});
     }
 });
 

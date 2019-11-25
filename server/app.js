@@ -40,17 +40,18 @@ app.use('/', index);
 //         });
 //     });
 // }
-//
+
 // // production error handler
 // // no stacktraces leaked to user
-// app.use((err, req, res, next) => {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//         message: err.message,
-//         error: {},
-//         title: 'error'
-//     });
-// });
+ app.use((err, req, res, next) => {
+     res.status(err.status || 500);
+     res.render('error', {
+         message: err.message,
+         error: err,
+         title: 'error'
+     });
+ });
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 module.exports = app;

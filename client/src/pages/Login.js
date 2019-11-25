@@ -57,7 +57,7 @@ export const Login = (props) => {
                             </div>
 
                             <div className="text-center">
-                                <button block variant="dark" className="btn btn-dark btn-block">
+                                <button variant="dark" className="btn btn-dark btn-block">
                                     Login
                                 </button>
                             </div>
@@ -69,7 +69,7 @@ export const Login = (props) => {
                         <div className='h3 text-uppercase font-weight-bold text-center'>
                             new user?
                         </div>
-                        <button block variant='warning' bsSize="large" style={{bottom: 0}} className='btn btn-dark btn-block position-absolute'>
+                        <button variant='warning' style={{bottom: 0}} className='btn btn-dark btn-block position-absolute'>
                             Signup
                         </button>
                     </div>

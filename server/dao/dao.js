@@ -4,6 +4,7 @@ function readJson(path) {
     try {
         return JSON.parse(fs.readFileSync(path, 'utf8'));
     } catch (e) {
+        console.error(e);
         throw e;
     }
 }
@@ -13,6 +14,7 @@ function writeJson(path, data) {
         fs.writeFileSync(path, JSON.stringify(data));
         return true;
     } catch (e) {
+        console.error(e);
         throw e;
     }
 }
@@ -24,6 +26,7 @@ function updateJson(path, json, data) {
         }
         return writeJson(path, json)
     } catch (e) {
+        console.error(e);
         throw e;
     }
 }
@@ -36,6 +39,7 @@ function appendJson(path, data) {
         }
         return writeJson(path, json)
     } catch (e) {
+        console.error(e);
         throw e;
     }
 }
