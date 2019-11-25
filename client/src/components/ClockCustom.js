@@ -22,14 +22,16 @@ export const ClockCustom = (props) => {
         let timeMsg;
         if (props.nearestTime) {
             let timeDiff = moment(props.nearestTime).diff(moment(props.time), 'hours');
-            if (timeDiff) {
+            if (timeDiff > 0 && timeDiff < 24) {
                 timeMsg = `${timeDiff} hours`
-            } else {
+            } else if (timeDiff === 0) {
                 timeDiff = moment(props.nearestTime).diff(moment(props.time), 'minutes');
                 timeMsg = `${timeDiff} minutes`
+            } else {
+                return setMsg('Free for all day')
             }
             if (props.occupied) {
-                text = `Free in ${timeMsg}`
+                text = `Will be free in ${timeMsg}`
             } else {
                 text = `Free for ${timeMsg}`
             }
