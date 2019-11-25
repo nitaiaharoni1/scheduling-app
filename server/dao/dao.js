@@ -31,17 +31,4 @@ function updateJson(path, json, data) {
     }
 }
 
-function appendJson(path, data) {
-    try {
-        let json = readJson(path);
-        for (let key in data) {
-            json[key] = data[key];
-        }
-        return writeJson(path, json)
-    } catch (e) {
-        console.error(e);
-        throw e;
-    }
-}
-
-module.exports = {readJson, writeJson, updateJson, appendJson};
+module.exports = {readJson, writeJson, updateJson};

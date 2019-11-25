@@ -15,22 +15,22 @@ export const ClockCustom = (props) => {
 
     useEffect(() => {
         getMsg();
-    }, [props.occupied, props.nearestTime,props.time]);
+    }, [props.occupied, props.nearestTime, props.time]);
 
     const getMsg = () => {
         let text;
         let timeMsg;
-        if(props.nearestTime){
+        if (props.nearestTime) {
             let timeDiff = moment(props.nearestTime).diff(moment(props.time), 'hours');
-            if(timeDiff){
+            if (timeDiff) {
                 timeMsg = `${timeDiff} hours`
-            } else{
+            } else {
                 timeDiff = moment(props.nearestTime).diff(moment(props.time), 'minutes');
                 timeMsg = `${timeDiff} minutes`
             }
-            if(props.occupied){
+            if (props.occupied) {
                 text = `Free in ${timeMsg}`
-            } else{
+            } else {
                 text = `Free for ${timeMsg}`
             }
             return setMsg(text);
@@ -40,7 +40,7 @@ export const ClockCustom = (props) => {
 
     return (
         <div className="d-flex flex-column h-100 w-100">
-            <div className="h5 text-white text-center pb-4 mb-2 m-0 font-weight-bold"> {props.roomName} </div>
+            <div className="h5 text-white text-center pb-4 mb-2 m-0 font-weight-bold"> {props.room} </div>
             <Clock value={date}
                    minuteHandLength={90}
                    minuteHandOppositeLength={0}

@@ -4,14 +4,14 @@
     "email": "admin@admin.com",
     "password": "1234",
     "username": "admin",
-    "firstName": "first",
-    "lastName": "last"
+    "firstName": "First",
+    "lastName": "Last"
   },
   "newUsername": {
     "password": "1234",
     "organization": "newOrg",
-    "firstName": "first",
-    "lastName": "last",
+    "firstName": "First",
+    "lastName": "Last",
     "email": "user@gmail.com"
   }
 }

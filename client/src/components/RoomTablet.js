@@ -4,95 +4,135 @@ import {CalendarCustom} from "./CalendarCustom";
 import "../styles/RoomTablet.css"
 import uuid from "uuid";
 import moment from "moment";
+import {getEventsApi, postEventsApi} from "../apis/rooms_api";
 
 export const RoomTablet = (props) => {
-    const [display, setDisplay] = useState(false);
-    const [events, setEvents] = useState([]);
+    const [isMouseInside, setIsMouseInside] = useState(false);
+    const [events, setEvents] = useState(false);
     const [time, setTime] = useState(moment());
     const [occupied, setOccupied] = useState(false);
     const [nearestTime, setNearestTime] = useState(null);
+
+
+    useEffect(async () => {
+        setInterval(() => {
+            setTime(moment());
+        }, 1000 * 60);
+        const fetchedEvents = await getEvents();
+        if (fetchedEvents) {
+            setEvents(fetchedEvents);
+        }
+    }, []);
 
     useEffect(() => {
         isOccupied();
         getNearestTime();
     }, [events]);
 
-    useEffect(() => {
-        setInterval(() => {
-            setTime(moment());
-        }, 1000 * 60);
-    }, []);
+    const getEvents = async () => {
+        return await getEventsApi(props.organization, props.room);
+    };
+
+    const postEvents = (updatedEvents) => {
+        postEventsApi(props.organization, props.room, updatedEvents);
+    };
 
     const isOccupied = () => {
-        let isOccupied = events.some(event =>
-            time.isBetween(event.start, event.end)
-        );
-        setOccupied(isOccupied)
+        if (events) {
+            let isOccupied = events.some(event =>
+                time.isBetween(event.start, event.end)
+            );
+            setOccupied(isOccupied)
+        }
     };
 
     const getNearestTime = () => {
-        let nearestArr = [];
-        for(let event of events){
-            if(time.isBefore(event.start)){
-                nearestArr.push(event.start)
+        if (events) {
+            let nearestArr = [];
+            for (let event of events) {
+                if (time.isBefore(event.start)) {
+                    nearestArr.push(event.start)
+                }
+                if (time.isBefore(event.end)) {
+                    nearestArr.push(event.end)
+                }
             }
-            if(time.isBefore(event.end)){
-                nearestArr.push(event.end)
+            nearestArr.sort((first, second) => {
+                return moment(first).isAfter(moment(second)) ? 1 : -1;
+            });
+            if (nearestArr.length > 0) {
+                setNearestTime(nearestArr[0])
             }
-        }
-        nearestArr.sort((first, second) => {
-            return moment(first).isAfter(moment(second)) ? 1 : -1;
-        });
-        if(nearestArr.length > 0){
-            setNearestTime(nearestArr[0])
         }
     };
 
     const handleMouseEnter = () => {
-        setDisplay(true)
+        setIsMouseInside(true)
     };
 
     const handleMouseLeave = () => {
-        setDisplay(false)
+        setIsMouseInside(false)
     };
 
-    const handleSelectEvent = (event) => {
-        console.log(events);
+    const handleSelectEvent = async (event) => {
+        const fetchedEvents = await getEvents();
         const title = window.prompt('Edit event\'s name:');
-        if(title){
-            const updatedEvents = [...events].map(existingEvent => {
+        if (title) {
+            const updatedEvents = [...fetchedEvents].map(existingEvent => {
                 return existingEvent.id === event.id ? {...existingEvent, title} : existingEvent
             });
-            setEvents(updatedEvents)
+            setEvents(updatedEvents);
+            postEvents(updatedEvents);
         }
     };
 
-    const handleSelectSlot = ({start, end}) => {
+    const handleSelectSlot = async ({start, end}) => {
+        const fetchedEvents = await getEvents();
         const id = uuid();
         const title = window.prompt('Enter a new event\'s name:');
-        if(title){
-            setEvents([...events, {id, start, end, title}])
+        if (title) {
+            const updatedEvents = [...fetchedEvents, {id, start, end, title}];
+            setEvents(updatedEvents);
+            postEvents(updatedEvents);
         }
     };
 
-    const handleChange = ({event, start, end}) => {
-        const updatedEvents = [...events].map(existingEvent => {
+    const handleChange = async ({event, start, end}) => {
+        const fetchedEvents = await getEvents();
+        const updatedEvents = [...fetchedEvents].map(existingEvent => {
             return existingEvent.id === event.id ? {...existingEvent, start, end} : existingEvent
         });
-        setEvents(updatedEvents)
+        setEvents(updatedEvents);
+        postEvents(updatedEvents);
     };
 
+    let screen;
+    if (isMouseInside) {
+        screen =
+            (<CalendarCustom
+                time={time}
+                room={props.room}
+                onChange={handleChange}
+                onSelectSlot={handleSelectSlot}
+                onSelectEvent={handleSelectEvent}
+                events={events}/>)
+    } else {
+        screen = (<ClockCustom
+            occupied={occupied}
+            room={props.room}
+            nearestTime={nearestTime}
+            time={time}/>)
+    }
+
     return (
-        <div className={"bg-dark p-5 room " + (occupied ? "border-danger" : "border-success")}
-             style={{width: "25vw", height: "25vw"}}
-             onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            {display ?
-                <CalendarCustom time={time} roomName={props.roomName} onChange={handleChange}
-                                onSelectSlot={handleSelectSlot}
-                                onSelectEvent={handleSelectEvent} events={events}/>
-                :
-                <ClockCustom occupied={occupied} roomName={props.roomName} nearestTime={nearestTime} time={time}/>
-            }
-        </div>
+        <>
+            {events && (
+                <div className={"bg-dark p-5 room " + (occupied ? "border-danger" : "border-success")}
+                     style={{width: "25vw", height: "25vw"}}
+                     onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                    {screen}
+                </div>
+            )}
+        </>
     );
 };

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { NavBar } from "./components/NavBar";
-import { RoomsPage } from "./pages/RoomsPage";
-import { Login } from "./pages/Login";
-import { authApi, logoutApi } from "./apis/users_api";
-import { Loading } from "./components/Loading";
+import React, {useState, useEffect} from 'react';
+import {NavBar} from "./components/NavBar";
+import {RoomsPage} from "./pages/RoomsPage";
+import {Login} from "./pages/Login";
+import {authApi, logoutApi} from "./apis/users_api";
+import {Loading} from "./components/Loading";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -12,15 +11,13 @@ function App() {
     const [organizationData, setOrganizationData] = useState({});
     const [userData, setUserData] = useState({});
 
-    useEffect( () => {
-        async function auth() {
-            const data = await authApi();
-            setLoading(false);
-            if (data) {
-                handleLogin(data);
-            }
+    useEffect(async () => {
+        const data = await authApi();
+        setLoading(false);
+        if (data) {
+            handleLogin(data);
+
         }
-        auth();
     }, []);
 
     const handleLogin = (data) => {
@@ -31,8 +28,10 @@ function App() {
     };
 
     const handleLogout = async () => {
-        setLoggedIn(false);
         const status = await logoutApi();
+        if (status) {
+            setLoggedIn(false);
+        }
     };
 
     let component;
@@ -40,7 +39,7 @@ function App() {
         component = <Loading/>
     } else {
         if (loggedIn) {
-            component = <RoomsPage rooms={organizationData.rooms}/>
+            component = <RoomsPage organization={organizationData.name} rooms={organizationData.rooms}/>
         } else {
             component = <Login onLogin={handleLogin}/>
         }
@@ -48,7 +47,7 @@ function App() {
 
     return (
         <div className="App">
-            <NavBar onLogout={handleLogout} icon={organizationData.icon} userData={userData} orgName={organizationData.name}/>
+            <NavBar onLogout={handleLogout} icon={organizationData.icon} userData={userData} orgName={organizationData.title}/>
             {component}
         </div>
     );

@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import { loginApi } from "../apis/users_api";
+import React, {useState} from 'react';
+import {loginApi} from "../apis/users_api";
 
 export const Login = (props) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [checkbox, setCheckbox] = useState(false);
-
-    const [loggedIn, setLoggedIn] = useState(false);
-    console.log(props);
-
-    useEffect(() => {
-        // Update useEffect
-    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,7 +28,7 @@ export const Login = (props) => {
         <>
             <div className="container mt-5 pt-3">
                 <div className="row">
-                    <div xs={6} className='col border-right'>
+                    <div className='col border-right'>
                         <div className='h3 text-center text-uppercase font-weight-bold'>
                             Login
                         </div>
@@ -57,7 +49,7 @@ export const Login = (props) => {
                             </div>
 
                             <div className="text-center">
-                                <button variant="dark" className="btn btn-dark btn-block">
+                                <button className="btn btn-dark btn-block">
                                     Login
                                 </button>
                             </div>
@@ -65,11 +57,11 @@ export const Login = (props) => {
 
                     </div>
 
-                    <div className='col position-relative' xs={6}>
+                    <div className='col position-relative'>
                         <div className='h3 text-uppercase font-weight-bold text-center'>
                             new user?
                         </div>
-                        <button variant='warning' style={{bottom: 0}} className='btn btn-dark btn-block position-absolute'>
+                        <button style={{bottom: 0}} className='btn btn-dark btn-block position-absolute'>
                             Signup
                         </button>
                     </div>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Calendar, momentLocalizer} from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 
@@ -12,18 +12,22 @@ localizer.formats.timeGutterFormat = 'H:mm';
 
 export const CalendarCustom = (props) => {
     const events = props.events;
+    const parsedEvents = events.map(event => {
+        return {id: event.id, title: event.title, start: moment(event.start)._d, end: moment(event.end)._d}
+    });
+    console.log(parsedEvents);
 
     return (
         <div className="container p-0 position-relative">
             <div className="h6 text-white position-absolute ml-2 mt-1"> {props.time.format('H:mm')}</div>
             <div className="d-flex justify-content-center">
-                <div className="h5 text-white my-auto font-weight-bold">{props.roomName}</div>
+                <div className="h5 text-white my-auto font-weight-bold">{props.room}</div>
             </div>
             <DragAndDropCalendar
                 selectable
                 resizable
                 localizer={localizer}
-                events={events}
+                events={parsedEvents}
                 views={['day']}
                 defaultView="day"
                 style={{height: 300}}
