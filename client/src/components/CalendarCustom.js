@@ -15,7 +15,6 @@ export const CalendarCustom = (props) => {
     const parsedEvents = events.map(event => {
         return {id: event.id, title: event.title, start: moment(event.start)._d, end: moment(event.end)._d}
     });
-    console.log(parsedEvents);
 
     return (
         <div className="container p-0 position-relative">
