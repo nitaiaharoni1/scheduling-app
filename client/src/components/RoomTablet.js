@@ -76,8 +76,6 @@ export const RoomTablet = (props) => {
     };
 
     const handleChange = ({event, start, end}) => {
-        console.log(JSON.stringify(events));
-        console.log(JSON.stringify(time));
         const updatedEvents = [...events].map(existingEvent => {
             return existingEvent.id === event.id ? {...existingEvent, start, end} : existingEvent
         });

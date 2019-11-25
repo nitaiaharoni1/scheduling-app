@@ -6,9 +6,7 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const rooms = require('./routes/rooms');
 const app = express();
-const port = process.env.PORT || 3001;
-// app.use(cors());
-// app.options('*', cors());
+const port = process.env.PORT || 3002;
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
@@ -21,12 +19,12 @@ app.use('/rooms', rooms);
 app.use('/', index);
 
 
-/// catch 404 and forward to error handler
-// app.use((req, res, next) => {
-//     const err = new Error('Not Found');
-//     err.status = 404;
-//     next(err);
-// });
+// catch 404 and forward to error handler
+ app.use((req, res, next) => {
+     const err = new Error('Not Found');
+     err.status = 404;
+     next(err);
+ });
 
 /// error handlers
 

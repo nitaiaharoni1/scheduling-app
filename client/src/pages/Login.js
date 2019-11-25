@@ -1,23 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from "react-router-dom";
-import {loginApi} from "../../apis/users_api";
+import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import { loginApi } from "../apis/users_api";
 
-export const Login = () => {
+export const Login = (props) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [checkbox, setCheckbox] = useState(false);
+
+    const [loggedIn, setLoggedIn] = useState(false);
+    console.log(props);
 
     useEffect(() => {
         // Update useEffect
     }, []);
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = await loginApi(username, password, checkbox);
-        console.log(JSON.stringify(data));
+        props.onLogin(data)
     };
-
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
