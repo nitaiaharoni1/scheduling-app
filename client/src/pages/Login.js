@@ -61,7 +61,7 @@ export const Login = (props) => {
                         <div className='h3 text-uppercase font-weight-bold text-center'>
                             new user?
                         </div>
-                        <button style={{bottom: 0}} className='btn btn-dark btn-block position-absolute'>
+                        <button onClick={props.onClickSignup} style={{bottom: 0}} className='btn btn-dark btn-block position-absolute'>
                             Signup
                         </button>
                     </div>
