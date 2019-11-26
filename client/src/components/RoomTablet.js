@@ -4,7 +4,7 @@ import {CalendarCustom} from "./CalendarCustom";
 import "../styles/RoomTablet.css"
 import uuid from "uuid";
 import moment from "moment";
-import {getEventsApi, putEventApi, postEventApi} from "../apis/rooms_api";
+import {getEventsApi, putEventApi, postEventApi} from "../apis/events_api";
 
 export const RoomTablet = (props) => {
     const [isMouseInside, setIsMouseInside] = useState(false);
