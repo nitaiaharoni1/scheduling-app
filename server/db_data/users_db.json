@@ -3,15 +3,35 @@
     "organization": "dynamic-yield",
     "email": "admin@admin.com",
     "password": "1234",
-    "username": "admin",
     "firstName": "First",
     "lastName": "Last"
   },
-  "newUsername": {
+  "admin@admin.com": {
+    "organization": "dynamic-yield",
+    "email": "admin@admin.com",
     "password": "1234",
-    "organization": "newOrg",
     "firstName": "First",
-    "lastName": "Last",
-    "email": "user@gmail.com"
+    "lastName": "Last"
+  },
+  "nitaiaharoni1@gmail.com": {
+    "firstName": "Nitai",
+    "lastName": "Aharoni",
+    "password": "1234",
+    "email": "nitaiaharoni1@gmail.com",
+    "organization": "dynamic-yield"
+  },
+  "ronald.mcdonald@mcdonalds.com": {
+    "firstName": "ronald",
+    "lastName": "mcdonald",
+    "password": "1234",
+    "email": "ronald.mcdonald@mcdonalds.com",
+    "organization": "mcdonalds"
+  },
+  "c@d.com": {
+    "firstName": "a",
+    "lastName": "b",
+    "password": "1234",
+    "email": "c@d.com",
+    "organization": "dynamic-yield"
   }
 }

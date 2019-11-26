@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
-import { signupApi } from "../apis/users_api";
+import React, {useEffect, useState} from 'react';
+import {organizationsApi} from "../apis/organizations_api";
+import {signupApi} from "../apis/users_api";
 
 export const Signup = (props) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [organization, setOrganization] = useState();
+    const [availableOrganizations, setAvailableOrganizations] = useState([]);
+
+    useEffect(() => {
+        getAvailableOrganizations();
+    }, []);
+
+    const getAvailableOrganizations = async () => {
+        const orgNames = await organizationsApi();
+        if (orgNames) {
+            setAvailableOrganizations(orgNames);
+        }
+    };
 
     const handleChange = e => {
         const val = e.target.value;
@@ -17,9 +29,6 @@ export const Signup = (props) => {
                 break;
             case "lastName":
                 setLastName(val);
-                break;
-            case "username":
-                setUsername(val);
                 break;
             case "email":
                 setEmail(val);
@@ -33,14 +42,23 @@ export const Signup = (props) => {
         }
     };
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
+    const handleSignupFailed = () => {
+        setEmail("");
+        setPassword("");
+        setFirstName("");
+        setLastName("");
+        setOrganization();
+        alert("User already exists");
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await signupApi(firstName, lastName, username, password, email, organization);
-        props.onSignup(data)
+        const data = await signupApi(firstName, lastName, password, email, organization);
+        if (data) {
+            props.onSignup(data)
+        } else {
+            handleSignupFailed();
+        }
     };
 
     return (
@@ -50,14 +68,14 @@ export const Signup = (props) => {
                 <form onSubmit={handleSubmit} className='my-4'>
                     <div className="row">
                         <div className="col form-group">
-                            <label>First Name</label>
+                            <label>First name</label>
                             <input type="text" value={firstName} onChange={handleChange} id="firstName" placeholder="Enter your first name"
                                    className="form-control"
                                    required/>
                         </div>
 
                         <div className="col form-group">
-                            <label>Last Name</label>
+                            <label>Last name</label>
                             <input type="text" value={lastName} onChange={handleChange} id="lastName" placeholder="Enter your last name"
                                    className="form-control"
                                    required/>
@@ -74,18 +92,10 @@ export const Signup = (props) => {
                         <label htmlFor="orgSelect">Organization</label>
                         <select value={organization} onChange={handleChange} className="form-control" id="organization">
                             <option disabled selected>Select your organization</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            {availableOrganizations.map(orgName =>
+                                <option>{orgName}</option>
+                            )};
                         </select>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Username</label>
-                        <input type="text" value={username} onChange={handleChange} id="username" placeholder="Enter a username"
-                               className="form-control" required/>
                     </div>
 
                     <div className="form-group">

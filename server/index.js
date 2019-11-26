@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const events = require('./routes/events');
+const organizations = require('./routes/organizations');
 const app = express();
 const port = process.env.PORT || 3002;
 
@@ -15,6 +16,7 @@ app.use(cookieParser());
 
 app.use('/users', users);
 app.use('/events', events);
+app.use('/organizations', organizations);
 app.use('/', index);
 
 

@@ -13,13 +13,13 @@ router.get('/auth', (req, res) => {
             const jsonUsers = dao.readJson(users_db);
             const token = req.cookies.roomer_token;
             const decoded = jwt.verify(token, SECRET);
-            if (jsonUsers[decoded.username]) {
+            if (jsonUsers[decoded.email]) {
                 const jsonOrganizations = dao.readJson(organizations_db);
-                const username = decoded.username;
-                const organization = jsonUsers[username].organization;
+                const email = decoded.email;
+                const organization = jsonUsers[email].organization;
                 res.status(200).json({
                     msg: 'Auth successful',
-                    userData: jsonUsers[decoded.username],
+                    userData: jsonUsers[decoded.email],
                     organizationData: jsonOrganizations[organization]
                 });
             } else {
@@ -35,22 +35,22 @@ router.get('/auth', (req, res) => {
 
 router.post('/login', (req, res) => {
     try {
-        const {username, password, checkbox} = req.body;
+        const {email, password, checkbox} = req.body;
         const jsonUsers = dao.readJson(users_db);
-        if (jsonUsers[username] && jsonUsers[username].password === password) {
-            const {organization} = jsonUsers[username];
+        if (jsonUsers[email] && jsonUsers[email].password === password) {
+            const {organization} = jsonUsers[email];
             const jsonOrganizations = dao.readJson(organizations_db);
             if (jsonOrganizations[organization]) {
                 if (checkbox) {
-                    const token = jwt.sign({username}, SECRET);
+                    const token = jwt.sign({email}, SECRET);
                     res.cookie('roomer_token', token);
                 }
-                return res.status(200).json({"msg": "Success", userData: jsonUsers[username], organizationData: jsonOrganizations[organization]});
+                return res.status(200).json({"msg": "Success", userData: jsonUsers[email], organizationData: jsonOrganizations[organization]});
             } else {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
             }
         } else {
-            return res.status(400).json({"msg": "Username or password is incorrect"});
+            return res.status(400).json({"msg": "Email or password is incorrect"});
         }
     } catch (e) {
         return res.status(400).json({"error": e.message});
@@ -68,13 +68,13 @@ router.post('/logout', (req, res) => {
 
 router.post('/signup', (req, res) => {
     try {
-        const {firstName, lastName, username, password, email, organization} = req.body;
+        const {firstName, lastName, password, email, organization} = req.body;
         let jsonUsers = dao.readJson(users_db);
-        if (username && !jsonUsers[username]) {
+        if (email && !jsonUsers[email]) {
             const newUser = {
-                firstName, lastName, username, password, email, organization
+                firstName, lastName, password, email, organization
             };
-            jsonUsers[username] = newUser;
+            jsonUsers[email] = newUser;
             dao.writeJson(users_db, jsonUsers);
             const jsonOrganizations = dao.readJson(organizations_db);
             if (jsonOrganizations[organization]) {
@@ -83,7 +83,7 @@ router.post('/signup', (req, res) => {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
             }
         } else {
-            return res.status(400).json({"msg": "Username is already taken"});
+            return res.status(400).json({"msg": "Email is already taken"});
         }
     } catch (e) {
         return res.status(400).json({"error": e.message});

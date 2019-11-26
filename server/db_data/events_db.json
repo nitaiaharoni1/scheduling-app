@@ -1,13 +1,31 @@
 {
-    "dynamic-yield": {
-        "Alpha": {
-            "events": []
-        },
-        "Bravo": {
-            "events": []
-        },
-        "Charlie": {
-            "events": []
+  "dynamic-yield": {
+    "Pizza": {
+      "events": []
+    },
+    "Mashawsha": {
+      "events": [
+        {
+          "id": "24a8a6a8-97eb-4cb9-a97e-47b0704563b8",
+          "title": "adfwaf",
+          "start": "2019-11-25T22:30:00.000Z",
+          "end": "2019-11-26T03:00:00.000Z"
         }
+      ]
+    },
+    "Gabay": {
+      "events": []
     }
+  },
+  "mcdonalds": {
+    "BigMac": {
+      "events": []
+    },
+    "McNuggets": {
+      "events": []
+    },
+    "McMuffin": {
+      "events": []
+    }
+  }
 }

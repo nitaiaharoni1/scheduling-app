@@ -39,8 +39,9 @@ function App() {
         }
     };
 
-    const handleSignup = () => {
+    const handleSignup = (data) => {
         setSignupPage(false);
+        handleLogin(data);
     };
 
     const handleSignupPage = () => {
@@ -51,7 +52,7 @@ function App() {
     if (loading) {
         component = <Loading/>
     } else if (signupPage) {
-        component = <Signup onSignup={handleLogin}/>
+        component = <Signup onSignup={handleSignup}/>
     } else if (loggedIn) {
         component = <RoomsPage organization={organizationData.name} rooms={organizationData.rooms}/>
     } else {
