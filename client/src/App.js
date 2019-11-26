@@ -51,7 +51,7 @@ function App() {
     if (loading) {
         component = <Loading/>
     } else if (signupPage) {
-        component = <Signup/>
+        component = <Signup onSignup={handleLogin}/>
     } else if (loggedIn) {
         component = <RoomsPage organization={organizationData.name} rooms={organizationData.rooms}/>
     } else {

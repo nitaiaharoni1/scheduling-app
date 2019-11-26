@@ -4,8 +4,8 @@ const dao = require("../dao/dao");
 const jwt = require('jsonwebtoken');
 const path = require("path");
 const SECRET = 'secret';
-const users_db = path.join(__dirname,"../db_data/users_db.json");
-const organizations_db = path.join(__dirname,"../db_data/organizations_db.json");
+const users_db = path.join(__dirname, "../db_data/users_db.json");
+const organizations_db = path.join(__dirname, "../db_data/organizations_db.json");
 
 router.get('/auth', (req, res) => {
     try {
@@ -68,20 +68,20 @@ router.post('/logout', (req, res) => {
 
 router.post('/signup', (req, res) => {
     try {
-        const {username, password, organization, firstName, lastName, email} = req.body;
-        const json = dao.readJson(users_db);
-        if (username && !json[username]) {
+        const {firstName, lastName, username, password, email, organization} = req.body;
+        let jsonUsers = dao.readJson(users_db);
+        if (username && !jsonUsers[username]) {
             const newUser = {
-                [username]: {
-                    password,
-                    organization,
-                    firstName,
-                    lastName,
-                    email
-                }
+                firstName, lastName, username, password, email, organization
             };
-            dao.updateJson(users_db, json, newUser);
-            return res.status(200).json({"msg": "Success"});
+            jsonUsers[username] = newUser;
+            dao.writeJson(users_db, jsonUsers);
+            const jsonOrganizations = dao.readJson(organizations_db);
+            if (jsonOrganizations[organization]) {
+                return res.status(200).json({"msg": "Success", userData: newUser, organizationData: jsonOrganizations[organization]});
+            }else {
+                return res.status(400).json({"msg": `Organization ${organization} does not exists`});
+            }
         } else {
             return res.status(400).json({"msg": "Username is already taken"});
         }

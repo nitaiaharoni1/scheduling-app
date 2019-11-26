@@ -1,12 +1,13 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
+import { signupApi } from "../apis/users_api";
 
 export const Signup = (props) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [organization, setOrganization] = useState("Select your organization");
+    const [email, setEmail] = useState("");
+    const [organization, setOrganization] = useState();
 
     const handleChange = e => {
         const val = e.target.value;
@@ -36,11 +37,10 @@ export const Signup = (props) => {
         setUsername(e.target.value);
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (true) {
-            props.userSignup();
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data = await signupApi(firstName, lastName, username, password, email, organization);
+        props.onSignup(data)
     };
 
     return (
