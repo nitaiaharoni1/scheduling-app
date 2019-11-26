@@ -1,11 +1,10 @@
 {
-  "name": "main",
-  "version": "0.0.1",
-  "private": true,
-  "main": "app.js",
+  "name": "roomer-schedualing-app",
+  "version": "1.0.0",
+  "author": "Nitai Aharoni",
   "scripts": {
-    "start": "node ./server/app.js",
-    "dev": "cd client && npm start && cd .. && SET DEV=true && node ./server/app.js",
+    "start": "node ./server/index.js",
+    "dev": "cd client && npm start && cd .. && SET DEV=true && node ./server/index.js",
     "test": "node_modules/.bin/mocha --recursive test",
     "test:coverage": "node_modules/.bin/nyc npm test",
     "test:unit": "node_modules/.bin/mocha --recursive test/middleware test/models test/routes",

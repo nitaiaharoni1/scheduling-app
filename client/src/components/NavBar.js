@@ -1,21 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 export const NavBar = (props) => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-
-    useEffect(() => {
-        if (props.userData && props.userData.firstName && props.userData.lastName) {
-            const first = capitalizeFirst(props.userData.firstName);
-            const last = capitalizeFirst(props.userData.lastName);
-            setFirstName(first);
-            setLastName(last);
-        }
-    }, [props.userData]);
-
-    const capitalizeFirst = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    };
 
     let component;
     if (props && props.orgName) {
@@ -25,7 +10,7 @@ export const NavBar = (props) => {
                     <img src={props.icon} width="35" height="35" className="align-top mr-2 align-middle"/>
                     {props.orgName}
                     <span className="ml-5 text-capitalize text-muted"
-                          style={{fontSize: "large"}}>{`${firstName}, ${lastName}`}
+                          style={{fontSize: "large"}}>{`${props.userData.firstName}, ${props.userData.lastName}`}
                     </span>
                 </span>
                 <span className="navbar-brand position-absolute" style={{left: "50%", transform: "translatex(-50%)"}}>Roomer</span>

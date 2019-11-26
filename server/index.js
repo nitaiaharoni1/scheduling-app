@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const index = require('./routes/index');
@@ -7,6 +8,8 @@ const events = require('./routes/events');
 const organizations = require('./routes/organizations');
 const app = express();
 const port = process.env.PORT || 3002;
+
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));

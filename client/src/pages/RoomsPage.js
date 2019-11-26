@@ -8,7 +8,7 @@ export const RoomsPage = (props) => {
             <div className="row d-flex justify-content-around m-5">
                 {props.rooms.map(room =>
                     <div key={room} className="col d-flex justify-content-center">
-                        <RoomTablet organization={props.organization} room={room}/>
+                        <RoomTablet userData={props.userData} organization={props.organization} room={room}/>
                     </div>
                 )}
             </div>

@@ -93,17 +93,19 @@ export const RoomTablet = (props) => {
         setIsMouseInside(false)
     };
 
-    const handleSelectEvent = async (event) => {
-        const title = window.prompt('Edit event\'s name:');
-        if (title) {
+    const handleSelectEvent = async (event, e) => {
+        const description = window.prompt('Edit event\'s name:');
+        if (description) {
+            const title = `${props.userData.firstName} ${props.userData.lastName}:\n${description}`;
             putEvent({...event, title});
         }
     };
 
     const handleSelectSlot = async ({start, end}) => {
         const id = uuid();
-        const title = window.prompt('Enter a new event\'s name:');
-        if (title) {
+        const description = window.prompt('Enter a new event\'s name:');
+        if (description) {
+            const title = `${props.userData.firstName} ${props.userData.lastName}:\n${description}`;
             postEvent({id, start, end, title});
         }
     };

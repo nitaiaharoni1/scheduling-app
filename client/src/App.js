@@ -26,8 +26,10 @@ function App() {
     };
 
     const handleLogin = (data) => {
-        const {firstName, lastName} = data.userData;
+        let {firstName, lastName} = data.userData;
         setOrganizationData(data.organizationData);
+        firstName = capitalizeFirst(firstName);
+        lastName = capitalizeFirst(lastName);
         setUserData({firstName, lastName});
         setLoggedIn(true);
     };
@@ -44,6 +46,10 @@ function App() {
         handleLogin(data);
     };
 
+    const capitalizeFirst = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    };
+
     const handleSignupPage = () => {
         setSignupPage(true);
     };
@@ -54,7 +60,7 @@ function App() {
     } else if (signupPage) {
         component = <Signup onSignup={handleSignup}/>
     } else if (loggedIn) {
-        component = <RoomsPage organization={organizationData.name} rooms={organizationData.rooms}/>
+        component = <RoomsPage userData={userData} organization={organizationData.name} rooms={organizationData.rooms}/>
     } else {
         component = <Login onLogin={handleLogin} onClickSignup={handleSignupPage}/>
     }
