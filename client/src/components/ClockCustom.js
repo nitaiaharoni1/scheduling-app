@@ -53,8 +53,8 @@ export const ClockCustom = (props) => {
                    hourMarksLength={6}
                    renderMinuteMarks={false}
                    renderNumbers={true}
-                   className={"m-auto py-4 " + (props.occupied ? "clock-red" : "clock-green")}/>
-            <hr className="bg-white mt-5 mb-1 mx-0"/>
+                   className={"m-auto py-lg-4" + (props.occupied ? "clock-red" : "clock-green")}/>
+            <hr className="bg-white mt-1 mt-lg-5 mb-1 mx-0"/>
             <div className={"h5 mb-0 " + (props.occupied ? "text-danger" : "text-success")}> {msg}</div>
         </div>
     );
