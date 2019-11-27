@@ -26,11 +26,14 @@ function App() {
     };
 
     const handleLogin = (data) => {
-        let {firstName, lastName} = data.userData;
+        try {
+            let {firstName, lastName} = data.userData;
+            firstName = capitalizeFirst(firstName);
+            lastName = capitalizeFirst(lastName);
+            setUserData({firstName, lastName});
+        } catch (e) {
+        }
         setOrganizationData(data.organizationData);
-        firstName = capitalizeFirst(firstName);
-        lastName = capitalizeFirst(lastName);
-        setUserData({firstName, lastName});
         setLoggedIn(true);
     };
 
