@@ -14,6 +14,7 @@ router.get('/:organization/:room', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -37,6 +38,7 @@ router.put('/:organization/:room', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -54,6 +56,7 @@ router.post('/:organization/:room', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -72,6 +75,7 @@ router.delete('/all/:organization', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -89,7 +93,9 @@ router.delete('/:organization/:room', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).json({"error": e.message});
     }
 });
+
 module.exports = router;

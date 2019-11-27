@@ -23,10 +23,10 @@ router.get('/auth', (req, res) => {
                     organizationData: jsonOrganizations[organization]
                 });
             } else {
-                res.status(500).json({msg: 'Auth failed... there is no user with this token'});
+                res.status(200).json({msg: 'Auth failed... there is no user with this token'});
             }
         } else {
-            res.status(500).json({msg: 'Auth failed... there is no cookie'});
+            res.status(200).json({msg: 'Auth failed... there is no cookie'});
         }
     } catch (e) {
         res.status(500).json({msg: e.message});
@@ -53,6 +53,7 @@ router.post('/login', (req, res) => {
             return res.status(400).json({"msg": "Email or password is incorrect"});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -62,6 +63,7 @@ router.post('/logout', (req, res) => {
         res.clearCookie('roomer_token');
         res.status(200).send({"msg": 'Success'});
     } catch (e) {
+        console.error( e.message);
         res.status(400).send({"msg": "Can't logout"});
     }
 });
@@ -86,6 +88,7 @@ router.post('/signup', (req, res) => {
             return res.status(400).json({"msg": "Email is already taken"});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).json({"error": e.message});
     }
 });

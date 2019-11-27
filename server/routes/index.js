@@ -7,6 +7,7 @@ router.get('*', (req, res) => {
     try {
         res.sendFile(path.join(__dirname, '../../client/build/index.html'));
     } catch (e) {
+        console.error( e.message);
         res.status(500).send({msg: e.message});
     }
 });

@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
         const organizationsNames = Object.keys(organizationsJson)
         return res.status(200).send({"msg": "Success", organizations: organizationsNames});
     } catch (e) {
+        console.error( e.message);
         return res.status(400).send({"error": e.message});
     }
 });
@@ -33,6 +34,7 @@ router.put('/:organization/:room', (req, res) => {
             return res.status(400).send({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).send({"error": e.message});
     }
 });
@@ -50,6 +52,7 @@ router.post('/:organization/:room', (req, res) => {
             return res.status(400).send({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
+        console.error( e.message);
         return res.status(400).send({"error": e.message});
     }
 });
