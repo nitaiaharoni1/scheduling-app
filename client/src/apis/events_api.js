@@ -41,3 +41,17 @@ export const postEventApi = async (organization, room, event) => {
         return null;
     }
 };
+
+export const deleteEventApi = async (organization, room, event) => {
+    try {
+        const res = await axios.delete(`/events/${organization}/${room}/${event.id}`);
+        if (res.status === 200) {
+            return res.data.events;
+        } else {
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+};

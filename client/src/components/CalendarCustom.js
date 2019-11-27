@@ -36,6 +36,7 @@ export const CalendarCustom = (props) => {
                 onSelectEvent={props.onSelectEvent}
                 onEventDrop={props.onChange}
                 onSelectSlot={props.onSelectSlot}
+                onDoubleClickEvent={props.onDoubleClickEvent}
                 defaultDate={new Date()}
             />
         </div>

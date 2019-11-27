@@ -14,7 +14,7 @@ router.get('/:organization/:room', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
-        console.error( e.message);
+        console.error(e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -38,7 +38,7 @@ router.put('/:organization/:room', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
-        console.error( e.message);
+        console.error(e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -56,7 +56,7 @@ router.post('/:organization/:room', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
-        console.error( e.message);
+        console.error(e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -75,25 +75,24 @@ router.delete('/all/:organization', (req, res) => {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
-        console.error( e.message);
+        console.error(e.message);
         return res.status(400).json({"error": e.message});
     }
 });
 
-router.delete('/:organization/:room', (req, res) => {
+router.delete('/:organization/:room/:id', (req, res) => {
     try {
-        const {organization, room} = req.params;
-        const ids = Object.values(req.query);
+        const {organization, room, id} = req.params;
         const json = dao.readJson(events_db);
-        if (ids && json[organization] && json[organization][room] && json[organization][room].events) {
-            json[organization][room].events = json[organization][room].events.filter(event => !ids.includes(event.id));
+        if (id && json[organization] && json[organization][room] && json[organization][room].events) {
+            json[organization][room].events = json[organization][room].events.filter(event => event.id !== id);
             dao.writeJson(events_db, json);
             return res.status(200).json({"msg": "Success", events: json[organization][room].events});
         } else {
             return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
-        console.error( e.message);
+        console.error(e.message);
         return res.status(400).json({"error": e.message});
     }
 });

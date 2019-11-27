@@ -4,7 +4,7 @@ import { CalendarCustom } from "./CalendarCustom";
 import "../styles/RoomTablet.css"
 import uuid from "uuid";
 import moment from "moment";
-import { getEventsApi, putEventApi, postEventApi } from "../apis/events_api";
+import { getEventsApi, putEventApi, postEventApi, deleteEventApi } from "../apis/events_api";
 
 export const RoomTablet = (props) => {
     const [isMouseInside, setIsMouseInside] = useState(false);
@@ -36,6 +36,13 @@ export const RoomTablet = (props) => {
 
     const postEvent = async (event) => {
         const newEvents = await postEventApi(props.organization, props.room, event);
+        if (newEvents) {
+            setEvents(newEvents);
+        }
+    };
+
+    const deleteEvent = async (event) => {
+        const newEvents = await deleteEventApi(props.organization, props.room, event);
         if (newEvents) {
             setEvents(newEvents);
         }
@@ -105,6 +112,13 @@ export const RoomTablet = (props) => {
         }
     };
 
+    const handleDoubleClickEvent = (event) => {
+        const confirmation = window.confirm('Are you sure you want to delete this event?:');
+        if (confirmation) {
+            deleteEvent(event);
+        }
+    };
+
     const handleChange = async ({event, start, end}) => {
         putEvent({...event, start, end});
     };
@@ -117,7 +131,8 @@ export const RoomTablet = (props) => {
                 room={props.room}
                 onChange={handleChange}
                 onSelectSlot={handleSelectSlot}
-                onSelectEvent={handleSelectEvent}
+                onDoubleClickEvent={handleDoubleClickEvent}
+                onClickEvent={handleSelectEvent}
                 events={events}
             />)
     } else {
