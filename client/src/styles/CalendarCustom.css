@@ -121,7 +121,14 @@ button.rbc-input::-moz-focus-inner {
     left: 50%;
     transform: translate(-50%, -50%);
     top: 50%;
-    opacity: 80%;
+}
+
+rbc-toolbar-label {
+    opacity: unset!important;
+}
+
+button {
+    opacity: unset!important;
 }
 
 .rbc-toolbar button {
@@ -178,7 +185,6 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-btn-group > button {
     border-radius: 15%;
-    opacity: 80%;
 }
 
 .rbc-event {
