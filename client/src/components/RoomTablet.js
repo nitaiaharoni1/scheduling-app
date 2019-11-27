@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {ClockCustom} from "./ClockCustom";
-import {CalendarCustom} from "./CalendarCustom";
+import React, { useState, useEffect } from 'react';
+import { ClockCustom } from "./ClockCustom";
+import { CalendarCustom } from "./CalendarCustom";
 import "../styles/RoomTablet.css"
 import uuid from "uuid";
 import moment from "moment";
-import {getEventsApi, putEventApi, postEventApi} from "../apis/events_api";
+import { getEventsApi, putEventApi, postEventApi } from "../apis/events_api";
 
 export const RoomTablet = (props) => {
     const [isMouseInside, setIsMouseInside] = useState(false);
@@ -46,7 +46,6 @@ export const RoomTablet = (props) => {
             setEvents(newEvents);
         }
     };
-
 
     const isOccupied = () => {
         let isOccupied = events.some(event =>
@@ -133,7 +132,7 @@ export const RoomTablet = (props) => {
     return (
         <>
             {events && (
-                <div style={{width: "70%"}} className={"bg-dark p-3 p-lg-5 room " + (occupied ? "border-danger" : "border-success")}
+                <div style={{width: props.size, height: props.size}} className={"bg-dark p-3 p-lg-5 room " + (occupied ? "border-danger" : "border-success")}
                      onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     {screen}
                 </div>

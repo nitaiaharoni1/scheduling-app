@@ -17,7 +17,7 @@ export const CalendarCustom = (props) => {
     });
 
     return (
-        <div className="container p-0 position-relative">
+        <div className="container p-0 position-relative h-100">
             <div className="h5 text-white position-absolute font-weight-bold"> {props.time.format('H:mm')}</div>
             <div className="d-flex justify-content-center">
                 <div className="h5 text-white my-auto font-weight-bold">{props.room}</div>
