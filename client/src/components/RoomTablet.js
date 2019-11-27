@@ -133,8 +133,7 @@ export const RoomTablet = (props) => {
     return (
         <>
             {events && (
-                <div className={"bg-dark p-5 room " + (occupied ? "border-danger" : "border-success")}
-                     style={{width: "25vw", height: "25vw"}}
+                <div className={"bg-dark p-3 p-lg-5 room " + (occupied ? "border-danger" : "border-success")}
                      onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     {screen}
                 </div>
