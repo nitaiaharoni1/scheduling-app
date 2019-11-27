@@ -1,1 +1,24 @@
-{"dynamic-yield":{"Pizza":{"events":[]},"Mashawsha":{"events":[{"id":"e2353345-6d27-4756-8ac0-0a2a419936fb","start":"2019-11-26T23:00:00.000Z","end":"2019-11-27T02:30:00.000Z","title":"First Last:\nrfgdxfgsdfg"},{"id":"c8efd7ec-c734-465b-9acf-eb69fbaf4428","start":"2019-11-27T06:00:00.000Z","end":"2019-11-27T08:00:00.000Z","title":"First Last:\nasdasdasd"},{"id":"357aeeb0-652a-493a-bfd4-e3309b125e12","start":"2019-11-27T08:00:00.000Z","end":"2019-11-27T10:30:00.000Z","title":"First Last:\nasfddsa"}]},"Gabay":{"events":[{"id":"1aada10b-4a37-4964-8f6a-cff0eb5413de","start":"2019-11-27T00:00:00.000Z","end":"2019-11-27T03:00:00.000Z","title":"First Last:\nsadasdsad"}]}},"mcdonalds":{"BigMac":{"events":[]},"McNuggets":{"events":[]},"McMuffin":{"events":[]}}}
+{
+  "dynamic-yield": {
+    "Pizza": {
+      "events": []
+    },
+    "Mashawsha": {
+      "events": []
+    },
+    "Gabay": {
+      "events": []
+    }
+  },
+  "mcdonalds": {
+    "BigMac": {
+      "events": []
+    },
+    "McNuggets": {
+      "events": []
+    },
+    "McMuffin": {
+      "events": []
+    }
+  }
+}
