@@ -670,7 +670,7 @@ button {
     z-index: 3;
     left: 0;
     right: 0;
-    height: 2px;
-    background-color: #74ad31;
+    height: 3px;
+    background-color: red;
     pointer-events: none;
 }
