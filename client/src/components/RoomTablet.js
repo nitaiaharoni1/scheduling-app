@@ -13,7 +13,6 @@ export const RoomTablet = (props) => {
     const [occupied, setOccupied] = useState(false);
     const [nearestTime, setNearestTime] = useState(null);
 
-
     useEffect(() => {
         setInterval(() => {
             setTime(moment());
