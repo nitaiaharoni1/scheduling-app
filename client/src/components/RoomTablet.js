@@ -22,8 +22,8 @@ export const RoomTablet = (props) => {
 
     useEffect(() => {
         if (events) {
-            const status = isOccupied();
-            getNearestTime(status);
+            const occupiedStatus = isOccupied();
+            getNearestTime(occupiedStatus);
         }
     }, [time,events]);
 
