@@ -25,7 +25,7 @@ export const RoomTablet = (props) => {
             const occupiedStatus = isOccupied();
             getNearestTime(occupiedStatus);
         }
-    }, [time,events]);
+    }, [time, events]);
 
     const getEvents = async () => {
         const newEvents = await getEventsApi(props.organization, props.room);
@@ -70,11 +70,9 @@ export const RoomTablet = (props) => {
             return moment(first).isAfter(moment(second)) ? 1 : -1;
         });
         if (occupiedStatus) {
-            while (nearestArr.length > 1) {
-                if (moment(nearestArr[0]).isSame(nearestArr[1])) {
-                    nearestArr.shift();
-                    nearestArr.shift();
-                }
+            while (nearestArr.length > 1 && moment(nearestArr[0]).isSame(nearestArr[1])) {
+                nearestArr.shift();
+                nearestArr.shift();
             }
         }
         if (nearestArr.length > 0) {
@@ -133,7 +131,8 @@ export const RoomTablet = (props) => {
     return (
         <>
             {events && (
-                <div style={{width: props.size, height: props.size}} className={"bg-dark p-3 p-lg-5 room " + (occupied ? "border-danger" : "border-success")}
+                <div style={{width: props.size, height: props.size}}
+                     className={"bg-dark p-3 p-lg-5 room " + (occupied ? "border-danger" : "border-success")}
                      onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     {screen}
                 </div>
