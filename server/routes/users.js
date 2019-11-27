@@ -23,10 +23,10 @@ router.get('/auth', (req, res) => {
                     organizationData: jsonOrganizations[organization]
                 });
             } else {
-                res.status(200).json({msg: 'Auth failed... there is no user with this token'});
+                res.status(204).json({msg: 'Auth failed... there is no user with this token'});
             }
         } else {
-            res.status(200).json({msg: 'Auth failed... there is no cookie'});
+            res.status(204).json({msg: 'Auth failed... there is no cookie'});
         }
     } catch (e) {
         res.status(500).json({msg: e.message});
