@@ -95,14 +95,6 @@ export const RoomTablet = (props) => {
         setIsMouseInside(false)
     };
 
-    const handleSelectEvent = async (event, e) => {
-        const description = window.prompt('Edit event\'s name:');
-        if (description) {
-            const title = `${props.userData.firstName} ${props.userData.lastName}:\n${description}`;
-            putEvent({...event, title});
-        }
-    };
-
     const handleSelectSlot = async ({start, end}) => {
         const id = uuid();
         const description = window.prompt('Enter a new event\'s name:');
@@ -112,7 +104,31 @@ export const RoomTablet = (props) => {
         }
     };
 
-    const handleDoubleClickEvent = (event) => {
+    let doubleClick1 = 0;
+    const handleSelectEvent = async (event) => {
+        if (doubleClick1 === 0) {
+            doubleClick1 = 1;
+            setTimeout(() => {
+                if (doubleClick1 === 1) {
+                    promptEditEvent(event);
+                    doubleClick1 = 0;
+                }
+            }, 300);
+        } else {
+            promptDeleteEvent(event);
+            doubleClick1 = 0;
+        }
+    };
+
+    const promptEditEvent=(event)=> {
+        const description = window.prompt('Edit event\'s name:');
+        if (description) {
+            const title = `${props.userData.firstName} ${props.userData.lastName}:\n${description}`;
+            putEvent({...event, title});
+        }
+    };
+
+    const promptDeleteEvent =(event)=> {
         const confirmation = window.confirm('Are you sure you want to delete this event?:');
         if (confirmation) {
             deleteEvent(event);
@@ -131,8 +147,7 @@ export const RoomTablet = (props) => {
                 room={props.room}
                 onChange={handleChange}
                 onSelectSlot={handleSelectSlot}
-                onDoubleClickEvent={handleDoubleClickEvent}
-                onClickEvent={handleSelectEvent}
+                onSelectEvent={handleSelectEvent}
                 events={events}
             />)
     } else {
