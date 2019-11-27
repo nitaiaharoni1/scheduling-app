@@ -26,13 +26,8 @@ function App() {
     };
 
     const handleLogin = (data) => {
-        try {
-            let {firstName, lastName} = data.userData;
-            firstName = capitalizeFirst(firstName);
-            lastName = capitalizeFirst(lastName);
-            setUserData({firstName, lastName});
-        } catch (e) {
-        }
+        let {firstName, lastName} = data.userData;
+        setUserData({firstName, lastName});
         setOrganizationData(data.organizationData);
         setLoggedIn(true);
     };
@@ -47,14 +42,6 @@ function App() {
     const handleSignup = (data) => {
         setSignupPage(false);
         handleLogin(data);
-    };
-
-    const capitalizeFirst = (str) => {
-        try {
-            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-        } catch (e) {
-            return str;
-        }
     };
 
     const handleSignupPage = () => {

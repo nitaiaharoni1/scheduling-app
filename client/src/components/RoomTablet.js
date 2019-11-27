@@ -26,7 +26,7 @@ export const RoomTablet = (props) => {
             isOccupied();
             getNearestTime();
         }
-    }, [events, time]);
+    }, [time]);
 
     const getEvents = async () => {
         const newEvents = await getEventsApi(props.organization, props.room);

@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
             return res.status(400).json({"msg": "Email or password is incorrect"});
         }
     } catch (e) {
-        console.error( e.message);
+        console.error(e.message);
         return res.status(400).json({"error": e.message});
     }
 });
@@ -63,7 +63,7 @@ router.post('/logout', (req, res) => {
         res.clearCookie('roomer_token');
         res.status(200).send({"msg": 'Success'});
     } catch (e) {
-        console.error( e.message);
+        console.error(e.message);
         res.status(400).send({"msg": "Can't logout"});
     }
 });
@@ -73,24 +73,34 @@ router.post('/signup', (req, res) => {
         const {firstName, lastName, password, email, organization} = req.body;
         let jsonUsers = dao.readJson(users_db);
         if (email && !jsonUsers[email]) {
+            let capitalizeFirst = capitalizeName(firstName);
+            let capitalizeLast = capitalizeName(lastName);
             const newUser = {
-                firstName, lastName, password, email, organization
+                firstName: capitalizeFirst, lastName: capitalizeLast, password, email, organization
             };
             jsonUsers[email] = newUser;
             dao.writeJson(users_db, jsonUsers);
             const jsonOrganizations = dao.readJson(organizations_db);
             if (jsonOrganizations[organization]) {
                 return res.status(200).json({"msg": "Success", userData: newUser, organizationData: jsonOrganizations[organization]});
-            }else {
+            } else {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
             }
         } else {
             return res.status(400).json({"msg": "Email is already taken"});
         }
     } catch (e) {
-        console.error( e.message);
+        console.error(e.message);
         return res.status(400).json({"error": e.message});
     }
 });
+
+capitalizeName = (str) => {
+    try {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    } catch (e) {
+        return str;
+    }
+};
 
 module.exports = router;
