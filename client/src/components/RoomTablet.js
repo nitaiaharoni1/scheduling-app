@@ -22,9 +22,10 @@ export const RoomTablet = (props) => {
 
     useEffect(() => {
         if (events) {
-            getNearestTime();
+            const status = isOccupied();
+            getNearestTime(status);
         }
-    }, [time]);
+    }, [time,events]);
 
     const getEvents = async () => {
         const newEvents = await getEventsApi(props.organization, props.room);
@@ -48,15 +49,14 @@ export const RoomTablet = (props) => {
     };
 
     const isOccupied = () => {
-        let isOccupied = events.some(event =>
+        let occupiedStatus = events.some(event =>
             time.isBetween(event.start, event.end)
         );
-        setOccupied(isOccupied);
-        return isOccupied;
+        setOccupied(occupiedStatus);
+        return occupiedStatus;
     };
 
-    const getNearestTime = () => {
-        const occupiedStatus = isOccupied();
+    const getNearestTime = (occupiedStatus) => {
         let nearestArr = [];
         for (let event of events) {
             if (time.isBefore(event.start)) {
@@ -120,7 +120,8 @@ export const RoomTablet = (props) => {
                 onChange={handleChange}
                 onSelectSlot={handleSelectSlot}
                 onSelectEvent={handleSelectEvent}
-                events={events}/>)
+                events={events}
+            />)
     } else {
         screen = (<ClockCustom
             occupied={occupied}
