@@ -42,7 +42,7 @@ export const ClockCustom = (props) => {
 
     return (
         <div className="d-flex flex-column h-100 w-100">
-            <div className="h5 text-white text-center pb-4 mb-2 m-0 font-weight-bold"> {props.room} </div>
+            <div className="h5 text-white text-center pb-lg-4 mb-2 m-0 font-weight-bold"> {props.room} </div>
             <Clock value={date}
                    minuteHandLength={90}
                    minuteHandOppositeLength={0}
@@ -53,8 +53,8 @@ export const ClockCustom = (props) => {
                    hourMarksLength={6}
                    renderMinuteMarks={false}
                    renderNumbers={true}
-                   className={"m-auto py-lg-4" + (props.occupied ? "clock-red" : "clock-green")}/>
-            <hr className="bg-white mt-1 mt-lg-5 mb-1 mx-0"/>
+                   className={"m-auto py-lg-4 " + (props.occupied ? "clock-red" : "clock-green")}/>
+            <hr className="bg-white mt-2 mt-lg-5 mb-1 mx-0"/>
             <div className={"h5 mb-0 " + (props.occupied ? "text-danger" : "text-success")}> {msg}</div>
         </div>
     );
