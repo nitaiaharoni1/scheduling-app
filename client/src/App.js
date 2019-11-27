@@ -47,7 +47,11 @@ function App() {
     };
 
     const capitalizeFirst = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        try {
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        } catch (e) {
+            return str;
+        }
     };
 
     const handleSignupPage = () => {
