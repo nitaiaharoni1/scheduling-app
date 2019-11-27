@@ -9,12 +9,12 @@ router.get('/:organization/:room', (req, res) => {
         const {organization, room} = req.params;
         const json = dao.readJson(events_db);
         if (json[organization] && json[organization][room] && json[organization][room].events) {
-            return res.status(200).send({"msg": "Success", events: json[organization][room].events});
+            return res.status(200).json({"msg": "Success", events: json[organization][room].events});
         } else {
-            return res.status(400).send({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
+            return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
-        return res.status(400).send({"error": e.message});
+        return res.status(400).json({"error": e.message});
     }
 });
 
@@ -32,12 +32,12 @@ router.put('/:organization/:room', (req, res) => {
                 }
             });
             dao.writeJson(events_db, json);
-            return res.status(200).send({"msg": "Success", events: json[organization][room].events});
+            return res.status(200).json({"msg": "Success", events: json[organization][room].events});
         } else {
-            return res.status(400).send({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
+            return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
-        return res.status(400).send({"error": e.message});
+        return res.status(400).json({"error": e.message});
     }
 });
 
@@ -49,13 +49,47 @@ router.post('/:organization/:room', (req, res) => {
         if (newEvent && json[organization] && json[organization][room] && json[organization][room].events) {
             json[organization][room].events.push(newEvent);
             dao.writeJson(events_db, json);
-            return res.status(200).send({"msg": "Success", events: json[organization][room].events});
+            return res.status(200).json({"msg": "Success", events: json[organization][room].events});
         } else {
-            return res.status(400).send({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
+            return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
         }
     } catch (e) {
-        return res.status(400).send({"error": e.message});
+        return res.status(400).json({"error": e.message});
     }
 });
 
+router.delete('/all/:organization', (req, res) => {
+    try {
+        const {organization} = req.params;
+        const json = dao.readJson(events_db);
+        if (json[organization]) {
+            for (let room in json[organization]) {
+                json[organization][room].events = [];
+            }
+            dao.writeJson(events_db, json);
+            return res.status(200).json({"msg": "Success", organization: organization, events: json[organization]});
+        } else {
+            return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
+        }
+    } catch (e) {
+        return res.status(400).json({"error": e.message});
+    }
+});
+
+router.delete('/:organization/:room', (req, res) => {
+    try {
+        const {organization, room} = req.params;
+        const ids = Object.values(req.query);
+        const json = dao.readJson(events_db);
+        if (ids && json[organization] && json[organization][room] && json[organization][room].events) {
+            json[organization][room].events = json[organization][room].events.filter(event => !ids.includes(event.id));
+            dao.writeJson(events_db, json);
+            return res.status(200).json({"msg": "Success", events: json[organization][room].events});
+        } else {
+            return res.status(400).json({"msg": `Room: ${room} or Organization: ${organization} does not exists`});
+        }
+    } catch (e) {
+        return res.status(400).json({"error": e.message});
+    }
+});
 module.exports = router;
