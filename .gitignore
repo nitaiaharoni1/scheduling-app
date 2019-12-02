@@ -3,3 +3,5 @@ node_modules/
 .sass-cache
 *.iml
 /.idea/
+/client/build/
+/client/node_modules/
