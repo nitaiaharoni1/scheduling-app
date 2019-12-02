@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { NavBar } from "./components/NavBar";
-import { RoomsPage } from "./pages/RoomsPage";
-import { Login } from "./pages/Login";
-import { authApi, logoutApi } from "./apis/users_api";
-import { Loading } from "./components/Loading";
-import { Signup } from "./pages/Signup";
+import React, {useState, useEffect} from 'react';
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import Cookies from 'js-cookie'
+import {NavBar} from "./components/NavBar";
+import {RoomsPage} from "./pages/RoomsPage";
+import {Login} from "./pages/Login";
+import {authApi, logoutApi} from "./apis/users_api";
+import {Loading} from "./components/Loading";
+import {Signup} from "./pages/Signup";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -18,7 +20,7 @@ function App() {
     }, []);
 
     const auth = async () => {
-        const data = await authApi();
+        const data = Cookies.get('roomer_token');
         setLoading(false);
         if (data) {
             handleLogin(data);
@@ -60,10 +62,20 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <NavBar onLogout={handleLogout} icon={organizationData.icon} userData={userData} orgName={organizationData.title}/>
-            {component}
-        </div>
+        <Router>
+            <Switch>
+                <div className="App">
+                    <NavBar onLogout={handleLogout} icon={organizationData.icon} userData={userData} orgName={organizationData.title}/>
+                    <Route exact path="/home" render={() => <div>Home</div>}/>
+                    <Route exact path="/home" render={() => <div>Home</div>}/>
+
+                    <Route path="/" render={() => <div>Home</div>}/>
+
+
+                    {component}
+                </div>
+            </Switch>
+        </Router>
     );
 }
 

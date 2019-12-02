@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const dao = require("../dao/dao");
+const authToken = require("../utils/auth");
 const jwt = require('jsonwebtoken');
 const path = require("path");
-const SECRET = 'secret';
 const users_db = path.join(__dirname, "../db_data/users_db.json");
 const organizations_db = path.join(__dirname, "../db_data/organizations_db.json");
 
@@ -12,7 +12,7 @@ router.get('/auth', (req, res) => {
         if (req.cookies && req.cookies.roomer_token) {
             const jsonUsers = dao.readJson(users_db);
             const token = req.cookies.roomer_token;
-            const decoded = jwt.verify(token, SECRET);
+            const decoded = jwt.verify(token, process.env.SECRET);
             if (jsonUsers[decoded.email]) {
                 const jsonOrganizations = dao.readJson(organizations_db);
                 const email = decoded.email;
@@ -41,11 +41,20 @@ router.post('/login', (req, res) => {
             const {organization} = jsonUsers[email];
             const jsonOrganizations = dao.readJson(organizations_db);
             if (jsonOrganizations[organization]) {
+                let token;
                 if (checkbox) {
-                    const token = jwt.sign({email}, SECRET);
-                    res.cookie('roomer_token', token);
+                    token = jwt.sign({
+                        userData: jsonUsers[email],
+                        organizationData: jsonOrganizations[organization]
+                    }, process.env.SECRET, {expiresIn: '5h'});
+                } else {
+                    token = jwt.sign({
+                        userData: jsonUsers[email],
+                        organizationData: jsonOrganizations[organization]
+                    }, process.env.SECRET, {expiresIn: 60 * 10});
                 }
-                return res.status(200).json({"msg": "Success", userData: jsonUsers[email], organizationData: jsonOrganizations[organization]});
+                res.cookie('roomer_token', token);
+                return res.status(200).json({"msg": "Success"});
             } else {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
             }
@@ -82,7 +91,12 @@ router.post('/signup', (req, res) => {
             dao.writeJson(users_db, jsonUsers);
             const jsonOrganizations = dao.readJson(organizations_db);
             if (jsonOrganizations[organization]) {
-                return res.status(200).json({"msg": "Success", userData: newUser, organizationData: jsonOrganizations[organization]});
+                const token = jwt.sign({
+                    userData: jsonUsers[email],
+                    organizationData: jsonOrganizations[organization]
+                }, process.env.SECRET, {expiresIn: '5h'});
+                res.cookie('roomer_token', token);
+                return res.status(200).json({"msg": "Success"});
             } else {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
             }
