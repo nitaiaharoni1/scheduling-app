@@ -4,7 +4,7 @@
   "author": "Nitai Aharoni",
   "scripts": {
     "start": "node ./server/index.js",
-    "dev": "cd client && npm start && cd .. && SET DEV=true && node ./server/index.js",
+    "dev": "node ./server/index.js && cd client && npm install && npm run build",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "test": "node_modules/.bin/mocha --recursive test",
     "test:coverage": "node_modules/.bin/nyc npm test",
