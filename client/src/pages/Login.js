@@ -46,13 +46,14 @@ export const Login = (props) => {
                         <form onSubmit={handleSubmit} className='mt-4'>
                             <div className="form-group">
                                 <label>Email</label>
-                                <input type="email" value={email} onChange={handleEmailChange} className="form-control" placeholder="Enter your email"
+                                <input name="email" type="email" value={email} onChange={handleEmailChange} className="form-control"
+                                       placeholder="Enter your email"
                                        required/>
                             </div>
 
                             <div className="form-group">
                                 <label>Password</label>
-                                <input value={password} onChange={handlePasswordChange} className="form-control" type="password"
+                                <input name="password" value={password} onChange={handlePasswordChange} className="form-control" type="password"
                                        placeholder="Enter your password" required/>
                             </div>
                             <div className="form-group form-inline">

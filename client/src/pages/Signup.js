@@ -69,14 +69,16 @@ export const Signup = (props) => {
                     <div className="row">
                         <div className="col form-group">
                             <label>First name</label>
-                            <input type="text" value={firstName} onChange={handleChange} id="firstName" placeholder="Enter your first name"
+                            <input name="firstName" type="text" value={firstName} onChange={handleChange} id="firstName"
+                                   placeholder="Enter your first name"
                                    className="form-control"
                                    required/>
                         </div>
 
                         <div className="col form-group">
                             <label>Last name</label>
-                            <input type="text" value={lastName} onChange={handleChange} id="lastName" placeholder="Enter your last name"
+                            <input name="lastName" type="text" value={lastName} onChange={handleChange} id="lastName"
+                                   placeholder="Enter your last name"
                                    className="form-control"
                                    required/>
                         </div>
@@ -84,7 +86,8 @@ export const Signup = (props) => {
 
                     <div className="form-group">
                         <label>Email</label>
-                        <input type="email" value={email} onChange={handleChange} id="email" placeholder="Enter your email" className="form-control"
+                        <input name="email" type="email" value={email} onChange={handleChange} id="email" placeholder="Enter your email"
+                               className="form-control"
                                required/>
                     </div>
 
@@ -100,7 +103,7 @@ export const Signup = (props) => {
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input type="password" value={password} onChange={handleChange} id="password" placeholder="Enter a password"
+                        <input name="password" type="password" value={password} onChange={handleChange} id="password" placeholder="Enter a password"
                                className="form-control"
                                required/>
                     </div>
