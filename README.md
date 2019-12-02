@@ -5,6 +5,12 @@ A demo for the Website App is available [here](https://roomer-development.heroku
 
 <!-- ![roomer](website.gif "mamas restaurant") -->
 
+## Description
+* The user can login and logout (option to use auto login with cookies).
+* The user can sign up.
+* A weekly overview of the booking status of each of the organization rooms.
+* Options to add, edit, reschedule and delete room reservations based on current availability.
+
 ## How to use?
 The calendar is drag and dropable: 
 * Adding events by dragging.
