@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import { loginApi } from "../apis/users_api";
 
 export const Login = (props) => {
@@ -38,7 +39,7 @@ export const Login = (props) => {
 
     return (
         <div className="container mt-5 pt-3">
-            <div className="row">
+            <div className="row m-0">
                 <div className='col border-right'>
                     <div className='h3 text-center text-uppercase font-weight-bold'>
                         Login
@@ -74,9 +75,11 @@ export const Login = (props) => {
                     <div className='h3 text-uppercase font-weight-bold text-center'>
                         new user?
                     </div>
-                    <button onClick={props.onClickSignup} style={{bottom: 0}} className='btn btn-dark btn-block position-absolute'>
-                        Signup
-                    </button>
+                    <Link to="/signup">
+                        <button style={{bottom: 0}} className='btn btn-dark btn-block position-absolute'>
+                            Signup
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

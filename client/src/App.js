@@ -6,12 +6,10 @@ import { NavBar } from "./components/NavBar";
 import { RoomsPage } from "./pages/RoomsPage";
 import { Login } from "./pages/Login";
 import { getDataApi, logoutApi } from "./apis/users_api";
-import { Loading } from "./components/Loading";
 import { Signup } from "./pages/Signup";
 
-function App(props) {
+function App() {
     const [loggedIn, setLoggedIn] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [organizationData, setOrganizationData] = useState({});
     const [userData, setUserData] = useState({});
     let history = useHistory();
@@ -23,7 +21,6 @@ function App(props) {
     const handleAuth = async () => {
         const cookie = Cookies.get('roomer_token');
         if (cookie) {
-            setLoading(false);
             const userData = await getDataApi();
             if (userData) {
                 handleData(userData);

@@ -64,7 +64,7 @@ export const Signup = (props) => {
 
     return (
         <>
-            <div className="container my-5 pb-3">
+            <div className="container mt-5 pt-3">
                 <div className='h3 text-uppercase font-weight-bold'>Signup</div>
                 <form onSubmit={handleSubmit} className='my-4'>
                     <div className="row">
