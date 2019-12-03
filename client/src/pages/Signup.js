@@ -47,7 +47,7 @@ export const Signup = (props) => {
         const data = await signupApi(firstName, lastName, password, email, organization);
         if (data) {
             props.onData(data);
-            props.onLogin();
+            props.onSignup();
         } else {
             handleSignupFailed();
         }
