@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { ClockCustom } from "./ClockCustom";
-import { CalendarCustom } from "./CalendarCustom";
-import "../styles/RoomTablet.css"
+import React, {useState, useEffect} from 'react';
+import {ClockCustom} from "./ClockCustom";
+import {CalendarCustom} from "./CalendarCustom";
 import uuid from "uuid";
 import moment from "moment";
-import { getEventsApi, putEventApi, postEventApi, deleteEventApi } from "../apis/events_api";
+import {getEventsApi, putEventApi, postEventApi, deleteEventApi} from "../apis/events_api";
 
 export const RoomTablet = (props) => {
     const [isMouseInside, setIsMouseInside] = useState(false);
@@ -26,6 +25,15 @@ export const RoomTablet = (props) => {
             getNearestTime(occupiedStatus);
         }
     }, [time, events]);
+
+    const handleMouseEnter = () => {
+        setIsMouseInside(true)
+    };
+
+    const handleMouseLeave = () => {
+        setIsMouseInside(false)
+    };
+
 
     const getEvents = async () => {
         const newEvents = await getEventsApi(props.organization, props.room);
@@ -87,14 +95,6 @@ export const RoomTablet = (props) => {
         }
     };
 
-    const handleMouseEnter = () => {
-        setIsMouseInside(true)
-    };
-
-    const handleMouseLeave = () => {
-        setIsMouseInside(false)
-    };
-
     const handleSelectSlot = async ({start, end}) => {
         const id = uuid();
         const description = window.prompt('Enter a new event\'s name:');
@@ -120,7 +120,7 @@ export const RoomTablet = (props) => {
         }
     };
 
-    const promptEditEvent=(event)=> {
+    const promptEditEvent = (event) => {
         const description = window.prompt('Edit event\'s name:');
         if (description) {
             const title = `${props.userData.firstName} ${props.userData.lastName}:\n${description}`;
@@ -128,7 +128,7 @@ export const RoomTablet = (props) => {
         }
     };
 
-    const promptDeleteEvent =(event)=> {
+    const promptDeleteEvent = (event) => {
         const confirmation = window.confirm('Are you sure you want to delete this event?:');
         if (confirmation) {
             deleteEvent(event);
@@ -139,34 +139,25 @@ export const RoomTablet = (props) => {
         putEvent({...event, start, end});
     };
 
-    let screen;
-    if (isMouseInside) {
-        screen =
-            (<CalendarCustom
-                time={time}
-                room={props.room}
-                onChange={handleChange}
-                onSelectSlot={handleSelectSlot}
-                onSelectEvent={handleSelectEvent}
-                events={events}
-            />)
+    let size;
+    if (props.width > 1200) {
+        size = props.width * 0.85
     } else {
-        screen = (<ClockCustom
-            occupied={occupied}
-            room={props.room}
-            nearestTime={nearestTime}
-            time={time}/>)
+        size = props.width * 0.6
     }
-
     return (
-        <>
-            {events && (
-                <div style={{width: props.width, height: props.width}}
-                     className={"bg-dark p-3 p-lg-5 room " + (occupied ? "border-danger" : "border-success")}
-                     onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                    {screen}
-                </div>
-            )}
-        </>
+        <div>
+            {events && <div style={{width: props.width, height: props.width, "border-radius": "10%", "border": "5px solid"}}
+                            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+                            className={"mx-auto my-3 bg-dark p-4 p-xl-5 room " + (occupied ? "border-danger" : "border-success")}>
+
+                {isMouseInside &&
+                <CalendarCustom height={props.width * 0.75} time={time} room={props.room}
+                                onChange={handleChange} onSelectSlot={handleSelectSlot} onSelectEvent={handleSelectEvent} events={events}/>}
+
+                {!isMouseInside &&
+                <ClockCustom size={size} occupied={occupied} room={props.room} nearestTime={nearestTime} time={time}/>}
+            </div>}
+        </div>
     );
 };

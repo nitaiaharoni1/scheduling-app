@@ -3,8 +3,8 @@
 }
 
 .react-clock__hour-mark__body {
-    height: 12px;
-    width: 12px !important;
+    height: 1rem;
+    width: 1rem !important;
     border-radius: 50%;
 }
 
@@ -13,7 +13,7 @@
 }
 
 .react-clock__mark__number {
-    top: -14% !important;
+    top: -1.5rem !important;
     color: white;
     opacity: 20%;
 }
@@ -55,15 +55,10 @@ div.react-clock__face > div:nth-child(11) > div.react-clock__mark__number {
 }
 
 .react-clock__hand__body {
-    border-radius: 40%;
+    border-radius: 30%;
     background-color: lightgrey;
 }
 
 .react-clock__minute-hand__body {
     opacity: 60%;
-}
-
-time {
-    width: 100% !important;
-    height: 100% !important;
 }

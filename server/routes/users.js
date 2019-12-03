@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const dao = require("../dao/dao");
-const authToken = require("../utils/auth");
 const jwt = require('jsonwebtoken');
 const path = require("path");
+const dao = require("../dao/dao");
+const authToken = require("../utils/auth");
+const capitalizeName = require("../utils/functions");
 const users_db = path.join(__dirname, "../db_data/users_db.json");
 const organizations_db = path.join(__dirname, "../db_data/organizations_db.json");
 
+//Get initial user data
 router.get('/data', authToken, (req, res) => {
     try {
         if (req.cookies && req.cookies.roomer_token) {
@@ -33,6 +35,7 @@ router.get('/data', authToken, (req, res) => {
     }
 });
 
+//User login
 router.post('/login', (req, res) => {
     try {
         const {email, password, checkbox} = req.body;
@@ -61,6 +64,7 @@ router.post('/login', (req, res) => {
     }
 });
 
+//User logout
 router.post('/logout', (req, res) => {
     try {
         res.clearCookie('roomer_token');
@@ -71,6 +75,7 @@ router.post('/logout', (req, res) => {
     }
 });
 
+//New user sign up
 router.post('/signup', (req, res) => {
     try {
         const {firstName, lastName, password, email, organization} = req.body;
@@ -99,13 +104,5 @@ router.post('/signup', (req, res) => {
         return res.status(400).json({"error": e.message});
     }
 });
-
-capitalizeName = (str) => {
-    try {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    } catch (e) {
-        return str;
-    }
-};
 
 module.exports = router;

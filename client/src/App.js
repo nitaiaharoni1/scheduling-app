@@ -48,6 +48,8 @@ function App() {
         const status = await logoutApi();
         if (status) {
             setLoggedIn(false);
+            setUserData({});
+            setOrganizationData({});
             history.push("/login");
         }
     };

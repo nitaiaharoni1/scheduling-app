@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const authToken = require("../utils/auth");
 const dao = require("../dao/dao");
 const path = require("path");
 const events_db = path.join(__dirname, "../db_data/events_db.json");
 
-router.get('/:organization/:room', (req, res) => {
+
+//Gets all events in an organization's room
+router.get('/:organization/:room', authToken, (req, res) => {
     try {
         const {organization, room} = req.params;
         const json = dao.readJson(events_db);
@@ -19,7 +22,8 @@ router.get('/:organization/:room', (req, res) => {
     }
 });
 
-router.put('/:organization/:room', (req, res) => {
+//Updates existing event in an organization's room
+router.put('/:organization/:room', authToken, (req, res) => {
     try {
         const {organization, room} = req.params;
         const updatedEvent = req.body;
@@ -43,7 +47,8 @@ router.put('/:organization/:room', (req, res) => {
     }
 });
 
-router.post('/:organization/:room', (req, res) => {
+//Adds new event in an organization's room
+router.post('/:organization/:room', authToken, (req, res) => {
     try {
         const {organization, room} = req.params;
         const newEvent = req.body;
@@ -61,7 +66,8 @@ router.post('/:organization/:room', (req, res) => {
     }
 });
 
-router.delete('/all/:organization', (req, res) => {
+//Deletes all events in an organization's room (api only)
+router.delete('/all/:organization', authToken, (req, res) => {
     try {
         const {organization} = req.params;
         const json = dao.readJson(events_db);
@@ -80,7 +86,8 @@ router.delete('/all/:organization', (req, res) => {
     }
 });
 
-router.delete('/:organization/:room/:id', (req, res) => {
+//Deletes an existing event in an organization's room
+router.delete('/:organization/:room/:id', authToken, (req, res) => {
     try {
         const {organization, room, id} = req.params;
         const json = dao.readJson(events_db);

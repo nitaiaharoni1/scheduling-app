@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {handleError} from "./api-utils";
 
 export const organizationsApi = async () => {
     try {
@@ -9,7 +10,7 @@ export const organizationsApi = async () => {
             return null;
         }
     } catch (e) {
-        console.error(e);
+        handleError(e);
         return null;
     }
 };

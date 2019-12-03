@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {handleError} from "./api-utils";
 
 export const loginApi = async (email, password, checkbox) => {
     try {
@@ -9,7 +10,7 @@ export const loginApi = async (email, password, checkbox) => {
             return null;
         }
     } catch (e) {
-        console.error(e);
+        handleError(e);
         return null;
     }
 };
@@ -23,7 +24,7 @@ export const signupApi = async (firstName, lastName, password, email, organizati
             return null;
         }
     } catch (e) {
-        console.error(e);
+        handleError(e);
         return null;
     }
 };
@@ -37,7 +38,7 @@ export const logoutApi = async () => {
             return null;
         }
     } catch (e) {
-        console.error(e);
+        handleError(e);
         return null;
     }
 };
@@ -52,19 +53,7 @@ export const getDataApi = async () => {
             return null;
         }
     } catch (e) {
-        return null;
-    }
-};
-
-export const authApi = async () => {
-    try {
-        const res = await axios.get(`/users/auth`);
-        if (res.status === 200) {
-            return res.data;
-        } else {
-            return null;
-        }
-    } catch (e) {
+        handleError(e);
         return null;
     }
 };

@@ -1,30 +1,30 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export const NavBar = (props) => {
     let component;
     if (props && props.orgName) {
         component = (
-            <nav className="navbar navbar-light bg-light">
-                <span className="navbar-brand">
-                    <img src={props.icon} width="35" height="35" className="align-top mr-2 align-middle"/>
-                    {props.orgName}
-                    <span className="ml-5 text-capitalize text-muted"
-                          style={{fontSize: "large"}}>{`${props.userData.firstName}, ${props.userData.lastName}`}
+            <nav className="navbar navbar-light bg-light mb-4">
+                <span className="navbar-brand py-0">
+                    <img src={props.icon} style={{height: "2rem", width: "2rem"}} className="align-top mr-2 align-middle"/>
+                    <span className="d-none d-md-inline">{props.orgName}</span>
+                    <span className="ml-3 ml-md-4 ml-lg-5 text-capitalize text-muted d-none d-md-inline" style={{fontSize: "large"}}>
+                        {`${props.userData.firstName}, ${props.userData.lastName}`}
                     </span>
                 </span>
 
-                <Link to="/login" className="nounderline navbar-brand position-absolute" style={{left: "50%", transform: "translatex(-50%)"}}>
+                <Link to="#" className="text-dark nounderline navbar-brand position-absolute" style={{left: "50%", transform: "translatex(-50%)"}}>
                     <span>Roomer</span>
                 </Link>
 
-                <a onClick={props.onLogout} href="#" className='p font-weight-bold nav-link text-dark pr-5'>Logout</a>
+                <a onClick={props.onLogout} href="#" className='p font-weight-bold nav-link text-dark pr-0 pr-sm-2 pr-lg-4 pr-xl-5'>Logout</a>
             </nav>
         )
     } else {
         component = (
-            <nav className="navbar navbar-light bg-light">
-                <div className="navbar-brand text-center w-100">
+            <nav className="navbar navbar-light bg-light mb-4">
+                <div className="navbar-brand text-center m-auto">
                     <Link to="/login" className="text-dark nounderline">
                         <span>Roomer</span>
                     </Link>
@@ -34,8 +34,8 @@ export const NavBar = (props) => {
     }
 
     return (
-        <>
-        {component}
-        </>
+        <div>
+            {component}
+        </div>
     );
 };

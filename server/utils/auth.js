@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-//authenticate token
-module.exports = function authToken(req, res, next) {
+//authenticate token middleware
+module.exports = authToken = (req, res, next) => {
     try {
         if (req.cookies && req.cookies.roomer_token) {
             const token = req.cookies.roomer_token;
@@ -9,10 +9,10 @@ module.exports = function authToken(req, res, next) {
             next();
         } else {
             res.clearCookie('roomer_token');
-            return res.status(401).json({"msg": "Not logged in"});
+            return res.status(401).json({"msg": "Sorry you are not logged in anymore..."});
         }
     } catch (e) {
         res.clearCookie('roomer_token');
-        return res.status(401).json({"msg": "Not logged in"});
+        return res.status(401).json({"msg": "Sorry you are not logged in anymore..."});
     }
 };

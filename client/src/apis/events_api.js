@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {handleError} from "./api-utils";
 
 export const getEventsApi = async (organization, room) => {
     try {
@@ -9,7 +10,7 @@ export const getEventsApi = async (organization, room) => {
             return null;
         }
     } catch (e) {
-        console.error(e);
+        handleError(e);
         return null;
     }
 };
@@ -23,7 +24,7 @@ export const putEventApi = async (organization, room, event) => {
             return null;
         }
     } catch (e) {
-        console.error(e);
+        handleError(e);
         return null;
     }
 };
@@ -37,7 +38,7 @@ export const postEventApi = async (organization, room, event) => {
             return null;
         }
     } catch (e) {
-        console.error(e);
+        handleError(e);
         return null;
     }
 };
@@ -51,7 +52,7 @@ export const deleteEventApi = async (organization, room, event) => {
             return null;
         }
     } catch (e) {
-        console.error(e);
+        handleError(e);
         return null;
     }
 };
