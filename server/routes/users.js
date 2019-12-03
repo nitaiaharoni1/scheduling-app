@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const dao = require("../dao/dao");
 const jwt = require('jsonwebtoken');
 const path = require("path");
-const SECRET = 'secret';
+const dao = require("../dao/dao");
+const authToken = require("../utils/auth");
+const capitalizeName = require("../utils/functions");
 const users_db = path.join(__dirname, "../db_data/users_db.json");
 const organizations_db = path.join(__dirname, "../db_data/organizations_db.json");
 
-router.get('/auth', (req, res) => {
+//Get initial user data
+router.get('/data', authToken, (req, res) => {
     try {
         if (req.cookies && req.cookies.roomer_token) {
             const jsonUsers = dao.readJson(users_db);
             const token = req.cookies.roomer_token;
-            const decoded = jwt.verify(token, SECRET);
+            const decoded = jwt.verify(token, process.env.SECRET);
             if (jsonUsers[decoded.email]) {
                 const jsonOrganizations = dao.readJson(organizations_db);
                 const email = decoded.email;
@@ -33,6 +35,7 @@ router.get('/auth', (req, res) => {
     }
 });
 
+//User login
 router.post('/login', (req, res) => {
     try {
         const {email, password, checkbox} = req.body;
@@ -41,10 +44,13 @@ router.post('/login', (req, res) => {
             const {organization} = jsonUsers[email];
             const jsonOrganizations = dao.readJson(organizations_db);
             if (jsonOrganizations[organization]) {
+                let token;
                 if (checkbox) {
-                    const token = jwt.sign({email}, SECRET);
-                    res.cookie('roomer_token', token);
+                    token = jwt.sign({email}, process.env.SECRET, {expiresIn: '5h'});
+                } else {
+                    token = jwt.sign({email}, process.env.SECRET, {expiresIn: 60 * 10});
                 }
+                res.cookie('roomer_token', token);
                 return res.status(200).json({"msg": "Success", userData: jsonUsers[email], organizationData: jsonOrganizations[organization]});
             } else {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
@@ -58,6 +64,7 @@ router.post('/login', (req, res) => {
     }
 });
 
+//User logout
 router.post('/logout', (req, res) => {
     try {
         res.clearCookie('roomer_token');
@@ -68,6 +75,7 @@ router.post('/logout', (req, res) => {
     }
 });
 
+//New user sign up
 router.post('/signup', (req, res) => {
     try {
         const {firstName, lastName, password, email, organization} = req.body;
@@ -82,7 +90,9 @@ router.post('/signup', (req, res) => {
             dao.writeJson(users_db, jsonUsers);
             const jsonOrganizations = dao.readJson(organizations_db);
             if (jsonOrganizations[organization]) {
-                return res.status(200).json({"msg": "Success", userData: newUser, organizationData: jsonOrganizations[organization]});
+                const token = jwt.sign({email}, process.env.SECRET, {expiresIn: '5h'});
+                res.cookie('roomer_token', token);
+                return res.status(200).json({"msg": "Success", userData: jsonUsers[email], organizationData: jsonOrganizations[organization]});
             } else {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
             }
@@ -94,13 +104,5 @@ router.post('/signup', (req, res) => {
         return res.status(400).json({"error": e.message});
     }
 });
-
-capitalizeName = (str) => {
-    try {
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    } catch (e) {
-        return str;
-    }
-};
 
 module.exports = router;

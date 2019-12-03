@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -10,18 +11,14 @@ const app = express();
 const port = process.env.PORT || 3002;
 
 app.use(express.static(path.join(__dirname, '../client/build')));
-
-// app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-
 app.use('/users', users);
 app.use('/events', events);
 app.use('/organizations', organizations);
 app.use('/', index);
-
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

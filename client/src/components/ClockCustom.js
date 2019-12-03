@@ -44,12 +44,14 @@ export const ClockCustom = (props) => {
         <div className="d-flex flex-column h-100 w-100">
             <div className="h5 text-white text-center pb-lg-4 mb-2 m-0 font-weight-bold"> {props.room} </div>
             <Clock value={date}
-                   minuteHandLength={90}
+                   size={props.size}
+                   minuteHandLength={80}
+                   secondHandLength={80}
                    minuteHandOppositeLength={0}
                    hourHandOppositeLength={0}
                    secondHandOppositeLength={0}
-                   minuteHandWidth={9}
-                   hourHandWidth={9}
+                   minuteHandWidth={11}
+                   hourHandWidth={10}
                    hourMarksLength={6}
                    renderMinuteMarks={false}
                    renderNumbers={true}

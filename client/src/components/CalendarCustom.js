@@ -29,7 +29,7 @@ export const CalendarCustom = (props) => {
                 events={parsedEvents}
                 views={['day']}
                 defaultView="day"
-                style={{height: 300}}
+                style={{height: props.height}}
                 timeslots={2}
                 step={30}
                 onEventResize={props.onChange}

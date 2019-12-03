@@ -42,6 +42,17 @@ export const Signup = (props) => {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data = await signupApi(firstName, lastName, password, email, organization);
+        if (data) {
+            props.onData(data);
+            props.onSignup();
+        } else {
+            handleSignupFailed();
+        }
+    };
+
     const handleSignupFailed = () => {
         setEmail("");
         setPassword("");
@@ -51,71 +62,59 @@ export const Signup = (props) => {
         alert("User already exists");
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const data = await signupApi(firstName, lastName, password, email, organization);
-        if (data) {
-            props.onSignup(data)
-        } else {
-            handleSignupFailed();
-        }
-    };
-
     return (
-        <>
-            <div className="container my-5 pb-3">
-                <div className='h3 text-uppercase font-weight-bold'>Signup</div>
-                <form onSubmit={handleSubmit} className='my-4'>
-                    <div className="row">
-                        <div className="col form-group">
-                            <label>First name</label>
-                            <input name="firstName" type="text" value={firstName} onChange={handleChange} id="firstName"
-                                   placeholder="Enter your first name"
-                                   className="form-control"
-                                   required/>
-                        </div>
-
-                        <div className="col form-group">
-                            <label>Last name</label>
-                            <input name="lastName" type="text" value={lastName} onChange={handleChange} id="lastName"
-                                   placeholder="Enter your last name"
-                                   className="form-control"
-                                   required/>
-                        </div>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input name="email" type="email" value={email} onChange={handleChange} id="email" placeholder="Enter your email"
+        <div className="container mt-5 pt-3">
+            <div className='h3 text-uppercase font-weight-bold'>Signup</div>
+            <form onSubmit={handleSubmit} className='my-4'>
+                <div className="row">
+                    <div className="col form-group">
+                        <label>First name</label>
+                        <input name="firstName" type="text" value={firstName} onChange={handleChange} id="firstName"
+                               placeholder="Enter your first name"
                                className="form-control"
                                required/>
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="orgSelect">Organization</label>
-                        <select value={organization} onChange={handleChange} className="form-control" id="organization">
-                            <option disabled selected>Select your organization</option>
-                            {availableOrganizations.map(orgName =>
-                                <option>{orgName}</option>
-                            )};
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input name="password" type="password" value={password} onChange={handleChange} id="password" placeholder="Enter a password"
+                    <div className="col form-group">
+                        <label>Last name</label>
+                        <input name="lastName" type="text" value={lastName} onChange={handleChange} id="lastName"
+                               placeholder="Enter your last name"
                                className="form-control"
                                required/>
                     </div>
+                </div>
+
+                <div className="form-group">
+                    <label>Email</label>
+                    <input name="email" type="email" value={email} onChange={handleChange} id="email" placeholder="Enter your email"
+                           className="form-control"
+                           required/>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="orgSelect">Organization</label>
+                    <select value={organization} onChange={handleChange} className="form-control" id="organization">
+                        <option disabled selected>Select your organization</option>
+                        {availableOrganizations.map(orgName =>
+                            <option>{orgName}</option>
+                        )};
+                    </select>
+                </div>
+
+                <div className="form-group">
+                    <label>Password</label>
+                    <input name="password" type="password" value={password} onChange={handleChange} id="password" placeholder="Enter a password"
+                           className="form-control"
+                           required/>
+                </div>
 
 
-                    <div className="form-group mt-4">
-                        <button type="submit" class="btn btn-dark btn-block">
-                            Signup
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </>
+                <div className="form-group mt-4">
+                    <button type="submit" class="btn btn-dark btn-block">
+                        Signup
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
