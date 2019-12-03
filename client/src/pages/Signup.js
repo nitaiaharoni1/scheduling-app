@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {organizationsApi} from "../apis/organizations_api";
-import {signupApi} from "../apis/users_api";
+import React, { useEffect, useState } from 'react';
+import { organizationsApi } from "../apis/organizations_api";
+import { signupApi } from "../apis/users_api";
 
 export const Signup = (props) => {
     const [firstName, setFirstName] = useState("");
@@ -55,7 +55,8 @@ export const Signup = (props) => {
         e.preventDefault();
         const data = await signupApi(firstName, lastName, password, email, organization);
         if (data) {
-            props.onSignup(data)
+            props.onData(data);
+            props.onLogin();
         } else {
             handleSignupFailed();
         }

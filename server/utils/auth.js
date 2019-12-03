@@ -3,14 +3,16 @@ const jwt = require('jsonwebtoken');
 //authenticate token
 module.exports = function authToken(req, res, next) {
     try {
-        const authHeader = req.headers['authorization'];
-        if (!authHeader) {
-            return res.status(401);
+        if (req.cookies && req.cookies.roomer_token) {
+            const token = req.cookies.roomer_token;
+            jwt.verify(token, process.env.SECRET);
+            next();
+        } else {
+            res.clearCookie('roomer_token');
+            return res.status(401).json({"msg": "Not logged in"});
         }
-        const decoded = jwt.verify(authHeader, process.env.SECRET);
-        req.user = decoded;
-        next();
     } catch (e) {
-        return res.status(401);
+        res.clearCookie('roomer_token');
+        return res.status(401).json({"msg": "Not logged in"});
     }
 };

@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 export const NavBar = (props) => {
-
     let component;
     if (props && props.orgName) {
         component = (
@@ -14,22 +14,22 @@ export const NavBar = (props) => {
                     </span>
                 </span>
                 <span className="navbar-brand position-absolute" style={{left: "50%", transform: "translatex(-50%)"}}>Roomer</span>
-                <a onClick={props.onLogout} href="" className='p font-weight-bold nav-link text-dark pr-5'>Logout</a>
+                <a onClick={props.onLogout} href="#" className='p font-weight-bold nav-link text-dark pr-5'>Logout</a>
             </nav>
         )
     } else {
         component = (
             <nav className="navbar navbar-light bg-light">
                 <div className="navbar-brand text-center w-100 position-relative">
-                    <span className="">Roomer</span>
+                    <Link to="/login">
+                        <span className="">Roomer</span>
+                    </Link>
                 </div>
             </nav>
         )
     }
 
     return (
-        <>
-            {component}
-        </>
+        {component}
     );
 };

@@ -4,9 +4,11 @@
   "author": "Nitai Aharoni",
   "scripts": {
     "start": "node ./server/index.js",
-    "dev": "run-p client server",
+    "dev-build": "run-p client-build server",
+    "dev-proxy": "run-p client-run",
     "server": "node ./server/index.js",
-    "client": "cd client && npm run build",
+    "client-build": "cd client && npm run build",
+    "client-run": "cd client && npm start",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "test": "node_modules/.bin/mocha --recursive test",
     "test:coverage": "node_modules/.bin/nyc npm test",

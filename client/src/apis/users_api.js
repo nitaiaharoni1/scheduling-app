@@ -42,6 +42,20 @@ export const logoutApi = async () => {
     }
 };
 
+
+export const getDataApi = async () => {
+    try {
+        const res = await axios.get(`/users/data`);
+        if (res.status === 200) {
+            return res.data;
+        } else {
+            return null;
+        }
+    } catch (e) {
+        return null;
+    }
+};
+
 export const authApi = async () => {
     try {
         const res = await axios.get(`/users/auth`);

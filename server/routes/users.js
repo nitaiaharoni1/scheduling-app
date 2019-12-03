@@ -7,7 +7,7 @@ const path = require("path");
 const users_db = path.join(__dirname, "../db_data/users_db.json");
 const organizations_db = path.join(__dirname, "../db_data/organizations_db.json");
 
-router.get('/auth', (req, res) => {
+router.get('/data', authToken, (req, res) => {
     try {
         if (req.cookies && req.cookies.roomer_token) {
             const jsonUsers = dao.readJson(users_db);
@@ -43,18 +43,12 @@ router.post('/login', (req, res) => {
             if (jsonOrganizations[organization]) {
                 let token;
                 if (checkbox) {
-                    token = jwt.sign({
-                        userData: jsonUsers[email],
-                        organizationData: jsonOrganizations[organization]
-                    }, process.env.SECRET, {expiresIn: '5h'});
+                    token = jwt.sign({email}, process.env.SECRET, {expiresIn: '5h'});
                 } else {
-                    token = jwt.sign({
-                        userData: jsonUsers[email],
-                        organizationData: jsonOrganizations[organization]
-                    }, process.env.SECRET, {expiresIn: 60 * 10});
+                    token = jwt.sign({email}, process.env.SECRET, {expiresIn: 60 * 10});
                 }
                 res.cookie('roomer_token', token);
-                return res.status(200).json({"msg": "Success"});
+                return res.status(200).json({"msg": "Success", userData: jsonUsers[email], organizationData: jsonOrganizations[organization]});
             } else {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
             }
@@ -91,12 +85,9 @@ router.post('/signup', (req, res) => {
             dao.writeJson(users_db, jsonUsers);
             const jsonOrganizations = dao.readJson(organizations_db);
             if (jsonOrganizations[organization]) {
-                const token = jwt.sign({
-                    userData: jsonUsers[email],
-                    organizationData: jsonOrganizations[organization]
-                }, process.env.SECRET, {expiresIn: '5h'});
+                const token = jwt.sign({email}, process.env.SECRET, {expiresIn: '5h'});
                 res.cookie('roomer_token', token);
-                return res.status(200).json({"msg": "Success"});
+                return res.status(200).json({"msg": "Success", userData: jsonUsers[email], organizationData: jsonOrganizations[organization]});
             } else {
                 return res.status(400).json({"msg": `Organization ${organization} does not exists`});
             }
