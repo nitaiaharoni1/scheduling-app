@@ -4,42 +4,10 @@
       "events": []
     },
     "Mashawsha": {
-      "events": [
-        {
-          "id": "0075beca-d994-4976-bcfe-f2dccbde4ebb",
-          "title": "First Last:\nasdasdsad",
-          "start": "2019-12-03T03:00:00.000Z",
-          "end": "2019-12-03T05:00:00.000Z"
-        },
-        {
-          "id": "8d7d8ef5-ce05-400f-88ba-e110992d4af8",
-          "start": "2019-12-03T19:30:00.000Z",
-          "end": "2019-12-03T21:30:00.000Z",
-          "title": "First Last:\nasdd"
-        },
-        {
-          "id": "db684d94-47a9-4e6c-8d1f-77e17436afbd",
-          "start": "2019-12-04T01:00:00.000Z",
-          "end": "2019-12-04T03:30:00.000Z",
-          "title": "First Last:\nsadasd"
-        },
-        {
-          "id": "b5a0b481-fe68-4cae-8abc-fd359de4fb85",
-          "title": "First Last:\nasdas",
-          "start": "2019-12-02T22:30:00.000Z",
-          "end": "2019-12-03T01:30:00.000Z"
-        }
-      ]
+      "events": []
     },
     "Gabay": {
-      "events": [
-        {
-          "id": "dd44221c-76ea-4ed8-8f26-d9d037a246bd",
-          "start": "2019-12-03T00:00:00.000Z",
-          "end": "2019-12-03T03:00:00.000Z",
-          "title": "First Last:\nasdasd"
-        }
-      ]
+      "events": []
     }
   },
   "mcdonalds": {
