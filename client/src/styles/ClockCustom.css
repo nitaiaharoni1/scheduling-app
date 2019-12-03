@@ -14,7 +14,8 @@
 
 .react-clock__mark__number {
     top: -1.5rem !important;
-    color: #525252 !important;
+    color: white;
+    opacity: 20%;
 }
 
 div.react-clock__face > div:nth-child(1) > div.react-clock__mark__number {
@@ -59,5 +60,5 @@ div.react-clock__face > div:nth-child(11) > div.react-clock__mark__number {
 }
 
 .react-clock__minute-hand__body {
-    background-color: #525252 !important;
+    opacity: 60%;
 }
