@@ -3,7 +3,8 @@ Roomer-Scheduler is a room scheduling app for organizations built using React, i
 
 A demo for the Website App is available [here](https://roomer-development.herokuapp.com/).
 
-![roomer_app](app1.gif "Roomer app")
+![roomer_app1](app1.gif "Roomer app")
+![roomer_app2](app2.gif "Roomer signup")
 
 ## Description
 * The user can login and logout (option to use auto login with cookies).
