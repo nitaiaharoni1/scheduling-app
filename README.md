@@ -5,9 +5,6 @@ A demo for the Website App is available [here](https://roomer-development.heroku
 
 ![roomer-app](Roomer react app1.gif "Roomer app")
 
-
-![roomer-signup](Roomer react app2.gif "Roomer sign up")
-
 ## Description
 * The user can login and logout (option to use auto login with cookies).
 * The user can sign up.
