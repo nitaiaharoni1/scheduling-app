@@ -3,7 +3,10 @@ Roomer-Scheduler is a room scheduling app for organizations built using React, i
 
 A demo for the Website App is available [here](https://roomer-development.herokuapp.com/).
 
-<!-- ![roomer](website.gif "mamas restaurant") -->
+![roomer-app](Roomer react app1.gif "Roomer app")
+
+
+![roomer-signup](Roomer react app2.gif "Roomer sign up")
 
 ## Description
 * The user can login and logout (option to use auto login with cookies).
@@ -49,7 +52,7 @@ The calendar is drag and dropable:
 1. `npm run dev`
 2. Open http://localhost:3002
 
-## Getting Started
+<!-- ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
