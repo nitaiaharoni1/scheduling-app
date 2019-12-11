@@ -1,6 +1,7 @@
 # Roomer-Scheduler - React room scheduling app
 Roomer-Scheduler is a room scheduling app for organizations built using React, integrated with Node.js/Express backend.
 
+The app provides the ability to schedule use of office rooms and manage them among different users. While giving an indication of the room's availability, whether it is free or busy, and what events have been reserved for this room. The app works with DB and provides a convenient drag & drop interface to add, change, delete events, similar to Outlook Calendar.
 A demo for the Website App is available [here](https://roomer-development.herokuapp.com/).
 
 ![](app1.gif "Roomer app")
